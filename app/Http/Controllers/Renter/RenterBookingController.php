@@ -45,9 +45,9 @@ class RenterBookingController extends Controller
 
             $bookings = $bookingsRaw->map(function ($booking) {
                 $statusMap = [
-                    'pending' => ['label' => 'Menunggu Pembayaran', 'color' => 'bg-[#f59e0b] text-on-primary'],
-                    'confirmed' => ['label' => 'Disewa', 'color' => 'bg-tertiary-fixed text-on-tertiary-fixed-variant'],
-                    'cancelled' => ['label' => 'Dibatalkan', 'color' => 'bg-surface-variant text-on-surface-variant'],
+                    'pending' => ['label' => 'Pending', 'color' => 'bg-[#f59e0b] text-on-primary'],
+                    'confirmed' => ['label' => 'Confirmed', 'color' => 'bg-tertiary-fixed text-on-tertiary-fixed-variant'],
+                    'cancelled' => ['label' => 'Cancelled', 'color' => 'bg-surface-variant text-on-surface-variant'],
                 ];
 
                 $status = $statusMap[$booking->status] ?? ['label' => ucfirst($booking->status), 'color' => 'bg-surface-variant text-on-surface-variant'];
@@ -74,9 +74,9 @@ class RenterBookingController extends Controller
         $booking = Booking::with(['venue.mainImage', 'payment'])->findOrFail($id);
 
         $statusMap = [
-            'pending' => 'Menunggu Pembayaran',
-            'confirmed' => 'Disewa',
-            'cancelled' => 'Dibatalkan',
+            'pending' => 'Pending',
+            'confirmed' => 'Confirmed',
+            'cancelled' => 'Cancelled',
         ];
 
         $duration = Carbon::parse($booking->start_time)->diffInHours(Carbon::parse($booking->end_time));

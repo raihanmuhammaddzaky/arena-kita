@@ -28,14 +28,14 @@
         <div class="lg:col-span-2 flex flex-col gap-stack-md">
             
             <!-- Status Banner -->
-            @if($booking->status == 'Menunggu Pembayaran')
+            @if($booking->status == 'Pending')
                 <div class="bg-[#f59e0b]/10 border border-[#f59e0b]/30 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-full bg-[#f59e0b] flex items-center justify-center text-on-primary shrink-0 shadow-sm">
                             <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">schedule</span>
                         </div>
                         <div>
-                            <h3 class="font-headline-md text-[#b45309] text-[18px]">Menunggu Pembayaran</h3>
+                            <h3 class="font-headline-md text-[#b45309] text-[18px]">Pending</h3>
                             <p class="font-body-md text-on-surface-variant text-sm">Selesaikan pembayaran sebelum batas waktu.</p>
                         </div>
                     </div>
@@ -44,14 +44,14 @@
                         <p class="font-headline-md text-[#b45309] text-[16px] font-mono">{{ $booking->deadline }}</p>
                     </div>
                 </div>
-            @elseif($booking->status == 'Disewa')
+            @elseif($booking->status == 'Confirmed')
                 <div class="bg-tertiary-fixed border border-tertiary-fixed-dim/30 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-full bg-on-tertiary-fixed-variant flex items-center justify-center text-primary shrink-0 shadow-sm">
                             <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
                         </div>
                         <div>
-                            <h3 class="font-headline-md text-on-tertiary-fixed-variant text-[18px]">Pembayaran Berhasil</h3>
+                            <h3 class="font-headline-md text-on-tertiary-fixed-variant text-[18px]">Confirmed</h3>
                             <p class="font-body-md text-on-tertiary-fixed text-sm">Lapangan telah berhasil disewa dan siap digunakan.</p>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                             <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">cancel</span>
                         </div>
                         <div>
-                            <h3 class="font-headline-md text-on-surface-variant text-[18px]">Pesanan Dibatalkan</h3>
+                            <h3 class="font-headline-md text-on-surface-variant text-[18px]">Cancelled</h3>
                             <p class="font-body-md text-on-surface-variant text-sm">Pesanan ini telah dibatalkan atau melewati batas waktu pembayaran.</p>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
                 </div>
             </div>
 
-            @if($booking->status == 'Menunggu Pembayaran')
+            @if($booking->status == 'Pending')
                 <!-- Payment Method Card -->
                 <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-sm overflow-hidden">
                     <div class="p-5 border-b border-outline-variant/20 flex items-center gap-2">
@@ -189,7 +189,7 @@
                         <p class="font-headline-md text-primary text-[24px]">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</p>
                     </div>
                 </div>
-                @if($booking->status == 'Menunggu Pembayaran')
+                @if($booking->status == 'Pending')
                 <div class="bg-surface-container-low px-6 py-4 border-t border-outline-variant/20 text-center">
                     <p class="font-body-md text-on-surface-variant text-[12px]">Pastikan nominal transfer sesuai hingga 3 digit terakhir.</p>
                 </div>

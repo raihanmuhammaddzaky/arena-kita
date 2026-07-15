@@ -24,6 +24,7 @@ Route::name('renter.')->group(function () {
     // Katalog Lapangan
     Route::get('/venues', [RenterVenueController::class, 'index'])->name('venues.index');
     Route::get('/venues/{slug}', [RenterVenueController::class, 'show'])->name('venues.show');
+    Route::get('/venues/{id}/availability', [RenterVenueController::class, 'availability'])->name('venues.availability');
 
     // Riwayat Booking & Detail
     Route::get('/bookings', [RenterBookingController::class, 'index'])->name('bookings.index');

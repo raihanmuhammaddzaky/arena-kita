@@ -60,5 +60,25 @@ class BookingSeeder extends Seeder
             'total_price' => $venue3->price * 2,
             'status' => 'cancelled',
         ]);
+        // 5. Test Availability Grid (Today's Bookings on Venue 1)
+        Booking::create([
+            'user_id' => $renter->id,
+            'venue_id' => $venue1->id,
+            'booking_date' => Carbon::today(),
+            'start_time' => '10:00:00',
+            'end_time' => '12:00:00',
+            'total_price' => $venue1->price * 2,
+            'status' => 'confirmed',
+        ]);
+
+        Booking::create([
+            'user_id' => $renter->id,
+            'venue_id' => $venue1->id,
+            'booking_date' => Carbon::today(),
+            'start_time' => '18:00:00',
+            'end_time' => '20:00:00',
+            'total_price' => $venue1->price * 2,
+            'status' => 'pending',
+        ]);
     }
 }

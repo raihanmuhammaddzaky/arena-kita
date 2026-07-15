@@ -158,30 +158,28 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="font-label-md text-on-surface mb-2 block">Jam Mulai</label>
-                            <div class="flex items-center border border-outline-variant/50 rounded-xl px-4 py-3 bg-surface focus-within:border-primary transition-all">
-                                <span class="material-symbols-outlined text-on-surface-variant mr-2">schedule</span>
-                                <input type="time" class="bg-transparent border-none focus:ring-0 font-body-md text-on-surface w-full" value="18:00">
-                            </div>
+                    <div class="mb-4">
+                        <label class="font-label-md text-on-surface mb-2 flex items-center justify-between">
+                            <span>Pilih Jam <span class="text-error">*</span></span>
+                            <span id="loading-spinner" class="hidden w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin"></span>
+                        </label>
+                        <div id="time-slot-grid" class="grid grid-cols-4 sm:grid-cols-5 gap-2 max-h-[250px] overflow-y-auto pr-2 custom-scrollbar">
+                            <!-- Slots will be rendered here by JS -->
+                            <p class="col-span-full text-center text-on-surface-variant font-body-md text-sm py-4">Silakan pilih tanggal terlebih dahulu.</p>
                         </div>
-                        <div>
-                            <label class="font-label-md text-on-surface mb-2 block">Jam Selesai</label>
-                            <div class="flex items-center border border-outline-variant/50 rounded-xl px-4 py-3 bg-surface focus-within:border-primary transition-all">
-                                <input type="time" class="bg-transparent border-none focus:ring-0 font-body-md text-on-surface w-full" value="20:00">
-                            </div>
-                        </div>
+                        <input type="hidden" name="start_time" id="start_time" required>
+                        <input type="hidden" name="end_time" id="end_time" required>
+                        <p id="selection-error" class="text-error font-body-md text-[12px] mt-2 hidden">Pilih minimal 1 slot waktu.</p>
                     </div>
 
                     <div class="bg-surface-container-low rounded-xl p-4 mt-2">
                         <div class="flex justify-between items-center mb-2">
                             <span class="font-body-md text-on-surface-variant">Durasi</span>
-                            <span class="font-label-md text-on-surface">2 Jam</span>
+                            <span class="font-label-md text-on-surface" id="display-duration">0 Jam</span>
                         </div>
                         <div class="flex justify-between items-center pt-2 border-t border-outline-variant/20">
                             <span class="font-label-md text-on-surface">Total Harga</span>
-                            <span class="font-headline-md text-primary">Rp {{ number_format(($venue->price ?? 150000) * 2, 0, ',', '.') }}</span>
+                            <span class="font-headline-md text-primary" id="display-price">Rp 0</span>
                         </div>
                     </div>
 
@@ -194,4 +192,164 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dateInput = document.querySelector('input[type="date"]');
+        const gridContainer = document.getElementById('time-slot-grid');
+        const spinner = document.getElementById('loading-spinner');
+        const displayDuration = document.getElementById('display-duration');
+        const displayPrice = document.getElementById('display-price');
+        const startInput = document.getElementById('start_time');
+        const endInput = document.getElementById('end_time');
+        const selectionError = document.getElementById('selection-error');
+        const venuePrice = {{ $venue->price ?? 150000 }};
+        const venueId = {{ $venue->id ?? 1 }};
+        
+        let selectedSlots = [];
+
+        // Generate time slots (08:00 to 22:00)
+        const generateAllSlots = () => {
+            let slots = [];
+            for (let i = 8; i <= 21; i++) {
+                const start = i.toString().padStart(2, '0') + ':00';
+                const end = (i + 1).toString().padStart(2, '0') + ':00';
+                slots.push({ start, end });
+            }
+            return slots;
+        };
+
+        const updateSelectionUI = () => {
+            // Sort selected slots
+            selectedSlots.sort();
+            
+            // Check if selection is contiguous
+            let isValid = true;
+            if (selectedSlots.length > 1) {
+                for(let i=1; i<selectedSlots.length; i++) {
+                    const prevEnd = parseInt(selectedSlots[i-1].split('-')[1].split(':')[0]);
+                    const currStart = parseInt(selectedSlots[i].split('-')[0].split(':')[0]);
+                    if(prevEnd !== currStart) {
+                        isValid = false;
+                        break;
+                    }
+                }
+            }
+
+            if(!isValid) {
+                selectionError.textContent = "Mohon pilih jam yang berurutan (tidak boleh melompat).";
+                selectionError.classList.remove('hidden');
+                displayDuration.textContent = '0 Jam';
+                displayPrice.textContent = 'Rp 0';
+                startInput.value = '';
+                endInput.value = '';
+                return;
+            } else {
+                selectionError.classList.add('hidden');
+            }
+
+            // Update duration & price
+            const duration = selectedSlots.length;
+            displayDuration.textContent = duration + ' Jam';
+            displayPrice.textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(duration * venuePrice);
+
+            // Update hidden inputs
+            if(duration > 0) {
+                startInput.value = selectedSlots[0].split('-')[0];
+                endInput.value = selectedSlots[selectedSlots.length - 1].split('-')[1];
+            } else {
+                startInput.value = '';
+                endInput.value = '';
+            }
+
+            // Update button styles
+            const buttons = gridContainer.querySelectorAll('button:not(:disabled)');
+            buttons.forEach(btn => {
+                const slotValue = btn.dataset.slot;
+                if(selectedSlots.includes(slotValue)) {
+                    btn.classList.remove('bg-surface-container-low', 'text-on-surface');
+                    btn.classList.add('bg-primary', 'text-on-primary', 'border-primary');
+                } else {
+                    btn.classList.add('bg-surface-container-low', 'text-on-surface');
+                    btn.classList.remove('bg-primary', 'text-on-primary', 'border-primary');
+                }
+            });
+        };
+
+        const handleSlotClick = (e) => {
+            const btn = e.currentTarget;
+            const slotValue = btn.dataset.slot;
+            
+            if(selectedSlots.includes(slotValue)) {
+                // Deselect
+                selectedSlots = selectedSlots.filter(s => s !== slotValue);
+            } else {
+                // Select
+                selectedSlots.push(slotValue);
+            }
+            updateSelectionUI();
+        };
+
+        const fetchAvailability = async (date) => {
+            if(!date) return;
+            
+            spinner.classList.remove('hidden');
+            gridContainer.innerHTML = '';
+            selectedSlots = [];
+            updateSelectionUI();
+
+            try {
+                // Fetch availability
+                const response = await fetch(`/venues/${venueId}/availability?date=${date}`);
+                const data = await response.json();
+                const bookedSlots = data.booked_slots; // Array of {start_time, end_time}
+                
+                const allSlots = generateAllSlots();
+                
+                allSlots.forEach(slot => {
+                    // Check if this slot is booked
+                    // A slot is booked if its start time falls within any booked period
+                    const isBooked = bookedSlots.some(booked => {
+                        const bStart = booked.start_time.substring(0, 5);
+                        const bEnd = booked.end_time.substring(0, 5);
+                        return slot.start >= bStart && slot.start < bEnd;
+                    });
+
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.dataset.slot = `${slot.start}-${slot.end}`;
+                    btn.className = `font-label-md text-[12px] py-2 rounded-xl border transition-colors ${
+                        isBooked 
+                        ? 'bg-surface-container-highest border-outline-variant/30 text-on-surface-variant opacity-50 cursor-not-allowed' 
+                        : 'bg-surface-container-low border-outline-variant/50 text-on-surface hover:border-primary/50'
+                    }`;
+                    btn.textContent = slot.start;
+                    
+                    if(isBooked) {
+                        btn.disabled = true;
+                        btn.title = 'Sudah dipesan';
+                    } else {
+                        btn.addEventListener('click', handleSlotClick);
+                    }
+                    
+                    gridContainer.appendChild(btn);
+                });
+
+            } catch (error) {
+                console.error("Failed to fetch availability", error);
+                gridContainer.innerHTML = '<p class="col-span-full text-center text-error text-sm">Gagal memuat jadwal.</p>';
+            } finally {
+                spinner.classList.add('hidden');
+            }
+        };
+
+        // Listen for date change
+        dateInput.addEventListener('change', (e) => fetchAvailability(e.target.value));
+        
+        // Initial load
+        if(dateInput.value) fetchAvailability(dateInput.value);
+    });
+</script>
+@endpush
 @endsection

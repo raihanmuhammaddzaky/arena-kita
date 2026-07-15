@@ -130,7 +130,7 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
                 @foreach($featuredVenues as $venue)
-                <a href="{{ route('renter.venues.show', $venue->id) }}" class="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/20 overflow-hidden hover:shadow-md transition-all group cursor-pointer flex flex-col h-full">
+                <a href="{{ route('renter.venues.show', $venue->slug) }}" class="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/20 overflow-hidden hover:shadow-md transition-all group cursor-pointer flex flex-col h-full">
                     <div class="h-56 relative overflow-hidden">
                         <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="{{ isset($venue->image) ? $venue->image : ($venue->mainImage ? asset($venue->mainImage->image_path) : 'https://placehold.co/600x400?text=No+Image') }}" alt="{{ $venue->name }}">
                         <div class="absolute top-4 right-4 bg-surface-container-lowest/90 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-1 shadow-sm">

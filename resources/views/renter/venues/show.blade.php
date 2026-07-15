@@ -3,11 +3,29 @@
 @section('content')
 <div class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-stack-md relative z-10">
     
-    <!-- Back Link -->
-    <a href="{{ route('renter.venues.index') }}" class="inline-flex items-center text-on-surface-variant hover:text-primary font-label-md transition-colors mb-stack-sm">
-        <span class="material-symbols-outlined mr-2">arrow_back</span>
-        Kembali ke Pencarian
-    </a>
+    <!-- Breadcrumb Navigation -->
+    <nav class="flex text-on-surface-variant mb-stack-md font-label-md overflow-x-auto hide-scrollbar pb-2 md:pb-0" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-2 whitespace-nowrap">
+            <li class="inline-flex items-center">
+                <a href="{{ route('renter.dashboard') }}" class="inline-flex items-center hover:text-primary transition-colors py-1 px-2 -ml-2 rounded-lg hover:bg-surface-container-low">
+                    <span class="material-symbols-outlined text-[18px] mr-1.5">home</span>
+                    Beranda
+                </a>
+            </li>
+            <li>
+                <div class="flex items-center">
+                    <span class="material-symbols-outlined text-[16px] mx-1 opacity-40">chevron_right</span>
+                    <a href="{{ route('renter.venues.index') }}" class="hover:text-primary transition-colors py-1 px-2 rounded-lg hover:bg-surface-container-low">Katalog Lapangan</a>
+                </div>
+            </li>
+            <li aria-current="page">
+                <div class="flex items-center">
+                    <span class="material-symbols-outlined text-[16px] mx-1 opacity-40">chevron_right</span>
+                    <span class="text-primary font-bold py-1 px-2 bg-primary/5 rounded-lg border border-primary/10">{{ $venue->name }}</span>
+                </div>
+            </li>
+        </ol>
+    </nav>
 
     <!-- Gallery Slider -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-stack-lg">
@@ -97,10 +115,15 @@
 
             <div class="border-t border-outline-variant/20 pt-stack-md">
                 <h3 class="font-headline-md text-primary mb-4">Lokasi</h3>
-                <div class="rounded-2xl overflow-hidden h-64 border border-outline-variant/20 relative bg-surface-container-low flex items-center justify-center">
-                    <div class="text-center text-on-surface-variant">
-                        <span class="material-symbols-outlined text-[48px] mb-2 opacity-50">map</span>
-                        <p class="font-label-md">Google Maps Placeholder</p>
+                <div class="bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/20 shadow-sm flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-full bg-secondary-container/50 text-on-secondary-container flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-[24px]">location_on</span>
+                    </div>
+                    <div>
+                        <h4 class="font-label-md text-primary mb-1">Alamat Lengkap</h4>
+                        <p class="font-body-md text-on-surface-variant leading-relaxed">
+                            {{ $venue->address ?? 'Alamat belum tersedia.' }}
+                        </p>
                     </div>
                 </div>
             </div>

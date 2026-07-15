@@ -45,7 +45,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
         @foreach($venues as $index => $venue)
             <!-- Venue Card -->
-            <a href="{{ isset($venue->disabled) && $venue->disabled ? '#' : route('renter.venues.show', $venue->id) }}" class="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/20 overflow-hidden hover:shadow-md transition-all group {{ isset($venue->disabled) && $venue->disabled ? 'opacity-70 cursor-not-allowed grayscale-[30%]' : 'cursor-pointer' }} flex flex-col">
+            <a href="{{ isset($venue->disabled) && $venue->disabled ? '#' : route('renter.venues.show', $venue->slug) }}" class="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/20 overflow-hidden hover:shadow-md transition-all group {{ isset($venue->disabled) && $venue->disabled ? 'opacity-70 cursor-not-allowed grayscale-[30%]' : 'cursor-pointer' }} flex flex-col">
                 <div class="relative overflow-hidden h-56">
                     <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="{{ isset($venue->image) ? $venue->image : ($venue->mainImage ? asset($venue->mainImage->image_path) : 'https://placehold.co/600x400?text=No+Image') }}" alt="{{ $venue->name }}">
                     
@@ -80,11 +80,9 @@
         @endforeach
     </div>
 
-    <!-- Load More -->
-    <div class="mt-12 text-center">
-        <button class="border border-outline-variant text-on-surface font-label-md px-8 py-3 rounded-xl hover:bg-surface-container-low transition-colors">
-            Muat Lebih Banyak
-        </button>
+    <!-- Pagination -->
+    <div class="mt-12 flex justify-center">
+        {{ $venues->links() }}
     </div>
 </div>
 

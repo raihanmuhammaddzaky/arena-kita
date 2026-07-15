@@ -11,6 +11,7 @@ class Venue extends Model
 
     protected $fillable = [
         'name',
+        'slug',
         'address',
         'description',
         'price',
@@ -18,6 +19,16 @@ class Venue extends Model
         'max_capacity',
         'is_active',
     ];
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     protected $casts = [
         'is_active' => 'boolean',

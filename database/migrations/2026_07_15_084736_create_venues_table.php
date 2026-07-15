@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('venues', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug')->unique();
             $table->text('address');
             $table->text('description')->nullable();
             $table->integer('price');

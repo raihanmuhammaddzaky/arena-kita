@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="id" style="width: 1280px; height: 1024px; overflow: hidden; position: relative;"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>ArenaKita - Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#d8e3fb",
+                    "surface-container-highest": "#d8e3fb",
+                    "surface-container-low": "#f0f3ff",
+                    "on-tertiary-fixed-variant": "#43474b",
+                    "error": "#ba1a1a",
+                    "primary": "#000000",
+                    "inverse-on-surface": "#ecf1ff",
+                    "tertiary-fixed-dim": "#c3c7cb",
+                    "tertiary-fixed": "#dfe3e7",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed-variant": "#005236",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed": "#002113",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#565e74",
+                    "on-primary-container": "#7c839b",
+                    "inverse-primary": "#bec6e0",
+                    "outline": "#76777d",
+                    "secondary-fixed": "#6ffbbe",
+                    "on-tertiary-container": "#808488",
+                    "secondary-fixed-dim": "#4edea3",
+                    "on-primary": "#ffffff",
+                    "on-primary-fixed": "#131b2e",
+                    "surface-dim": "#cfdaf2",
+                    "on-error": "#ffffff",
+                    "secondary-container": "#6cf8bb",
+                    "secondary": "#006c49",
+                    "surface-container-high": "#dee8ff",
+                    "on-background": "#111c2d",
+                    "inverse-surface": "#263143",
+                    "on-secondary": "#ffffff",
+                    "primary-container": "#131b2e",
+                    "primary-fixed": "#dae2fd",
+                    "surface": "#f9f9ff",
+                    "tertiary-container": "#171c1f",
+                    "on-tertiary-fixed": "#171c1f",
+                    "on-surface": "#111c2d",
+                    "on-surface-variant": "#45464d",
+                    "on-secondary-container": "#00714d",
+                    "error-container": "#ffdad6",
+                    "background": "#f9f9ff",
+                    "outline-variant": "#c6c6cd",
+                    "surface-bright": "#f9f9ff",
+                    "surface-container": "#e7eeff",
+                    "tertiary": "#000000",
+                    "primary-fixed-dim": "#bec6e0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px",
+                    "organic": "1rem"
+            },
+            "spacing": {
+                    "container-max": "1280px",
+                    "margin-mobile": "1rem",
+                    "margin-desktop": "2.5rem",
+                    "stack-md": "1.5rem",
+                    "gutter": "1.5rem",
+                    "stack-sm": "0.5rem",
+                    "stack-lg": "3rem"
+            },
+            "fontFamily": {
+                    "body-md": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "display": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "headline-lg-mobile": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "headline-lg": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "body-lg": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "label-md": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "headline-md": [
+                            "Plus Jakarta Sans"
+                    ]
+            },
+            "fontSize": {
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "display": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-md": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ]
+            },
+            boxShadow: {
+                'ambient-sm': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                'ambient-md': '0 8px 30px -4px rgba(0, 0, 0, 0.08)',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .organic-input {
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .organic-input:focus {
+            outline: none;
+            border-color: #006c49;
+            box-shadow: 0 0 0 2px rgba(0, 108, 73, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex antialiased">
+<!-- Linear/Transactional Journey - Suppress TopNavBar & Footer as per Semantic Shell Mandate -->
+<!-- Split Layout Container -->
+<div class="flex flex-1 w-full flex-col md:flex-row">
+<!-- Left Side: Login Form Canvas -->
+<div class="w-full md:w-1/2 flex items-center justify-center p-margin-mobile md:p-margin-desktop bg-surface-container-lowest z-10 shadow-ambient-md relative order-2 md:order-1 min-h-screen">
+<div class="w-full max-w-md flex flex-col gap-stack-lg relative">
+<!-- Brand Anchor -->
+<div class="flex flex-col items-center mb-stack-md text-center gap-stack-sm">
+<div class="w-16 h-16 bg-surface-container-low rounded-full flex items-center justify-center mb-4 shadow-ambient-sm">
+<span class="material-symbols-outlined text-secondary" style="font-size: 32px;">sports_tennis</span>
+</div>
+<h1 class="font-display text-headline-lg-mobile md:text-headline-lg text-primary tracking-tight">ArenaKita</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Calm focus. Better play. Sign in to your account.</p>
+</div>
+<!-- Alert Banner -->
+<div class="bg-surface-container-low border-l-4 border-primary-fixed-dim rounded-r-lg p-4 flex items-start gap-3 shadow-ambient-sm">
+<span class="material-symbols-outlined text-on-primary-container flex-shrink-0 mt-0.5" style="font-variation-settings: 'FILL' 1;">info</span>
+<p class="font-body-md text-[14px] leading-relaxed text-on-surface-variant">
+                        Catatan: Akun baru memerlukan persetujuan Admin sebelum dapat digunakan untuk booking.
+                    </p>
+</div>
+<!-- Form -->
+<form action="#" class="flex flex-col gap-stack-md" method="POST">
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface" for="email">Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant z-10" style="font-size: 20px;">mail</span>
+<input class="w-full bg-surface-variant text-on-surface rounded-[12px] py-3 pl-12 pr-4 organic-input font-body-md text-body-md placeholder:text-outline-variant" id="email" name="email" placeholder="you@example.com" required="" type="email">
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md text-on-surface" for="password">Password</label>
+<a class="font-label-md text-[12px] text-secondary hover:text-primary transition-colors" href="#">Forgot Password?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant z-10" style="font-size: 20px;">lock</span>
+<input class="w-full bg-surface-variant text-on-surface rounded-[12px] py-3 pl-12 pr-4 organic-input font-body-md text-body-md placeholder:text-outline-variant" id="password" name="password" placeholder="••••••••" required="" type="password">
+<button aria-label="Toggle password visibility" class="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined" style="font-size: 20px;">visibility_off</span>
+</button>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col gap-4 mt-4">
+<button class="w-full bg-secondary text-on-secondary font-label-md text-label-md py-4 rounded-[12px] shadow-ambient-md hover:shadow-ambient-sm hover:scale-[0.99] transition-all duration-300 flex justify-center items-center gap-2 group" type="submit">
+                            Masuk
+                            <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform duration-300" style="font-size: 18px;">arrow_forward</span>
+</button>
+<div class="relative flex items-center py-2">
+<div class="flex-grow border-t border-surface-container-highest"></div>
+<span class="flex-shrink-0 mx-4 text-on-surface-variant font-label-md text-[12px]">OR</span>
+<div class="flex-grow border-t border-surface-container-highest"></div>
+</div>
+<button class="w-full bg-surface-container-highest text-on-surface font-label-md text-label-md py-4 rounded-[12px] shadow-ambient-sm hover:bg-surface-dim transition-colors duration-300 flex justify-center items-center gap-2" type="button">
+<span class="material-symbols-outlined" style="font-size: 18px;">person_add</span>
+                            Create New Account
+                        </button>
+</div>
+</form>
+<!-- Motif Subtle Integration Bottom Left -->
+<div class="absolute -bottom-8 -left-8 w-32 h-32 opacity-[0.02] pointer-events-none" style="background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLvvpZc_l4YqlwXbt3982ox-MfU0UB7jx3DYw7LVq1MGV0WkYZX_ySHT5TJJonItlLfOPvbSt7yIj4TAXl0kOk4zd8DL4_MI92Bw3e-0R3Q_70lpb41jhjE_uoedN1xN0jZ1yS0WOSqn3foIWYOH4ENOsfs_FPEfjgZtj6UqS8JZDpywd1TAobHlr8wGmq8SifDH44shCFvuUflVJsivqfrAoPJNVE4NJnVLB1MHpFLGvtNXIKhUu82Z3Pk'); background-size: cover; border-radius: 24px;"></div>
+</div>
+</div>
+<!-- Right Side: Visual Canvas (Hidden on Mobile) -->
+<div class="hidden md:flex w-1/2 relative bg-primary-container order-1 md:order-2 overflow-hidden">
+<!-- Subtle Mega Mendung Motif as Background Mask -->
+<div class="absolute inset-0 opacity-10 mix-blend-overlay" data-alt="An elegant and subtle Mega Mendung batik pattern, rendered in a modern geometric interpretation. The color scheme features navy blue and off-white tones, creating a calm, sporty, and professional background. The aesthetic is minimalist, clean, and perfectly suited for a premium sports reservation application." style="background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLvvpZc_l4YqlwXbt3982ox-MfU0UB7jx3DYw7LVq1MGV0WkYZX_ySHT5TJJonItlLfOPvbSt7yIj4TAXl0kOk4zd8DL4_MI92Bw3e-0R3Q_70lpb41jhjE_uoedN1xN0jZ1yS0WOSqn3foIWYOH4ENOsfs_FPEfjgZtj6UqS8JZDpywd1TAobHlr8wGmq8SifDH44shCFvuUflVJsivqfrAoPJNVE4NJnVLB1MHpFLGvtNXIKhUu82Z3Pk'); background-size: cover; background-position: center;"></div>
+<!-- Soft Gradient Overlay to blend with UI -->
+<div class="absolute inset-0 bg-gradient-to-br from-primary-container/80 to-surface-dim/40 backdrop-blur-[2px]"></div>
+<div class="relative z-10 flex flex-col justify-end p-margin-desktop h-full w-full max-w-lg">
+<div class="bg-surface/10 backdrop-blur-md rounded-2xl p-8 border border-white/10 shadow-ambient-md">
+<span class="material-symbols-outlined text-secondary-fixed mb-4" style="font-size: 40px; font-variation-settings: 'FILL' 1;">format_quote</span>
+<p class="font-body-lg text-body-lg text-on-primary-fixed mb-6 font-light leading-relaxed">
+                        "ArenaKita provides a seamless and tranquil booking experience. The interface is intuitive, allowing me to focus on my game rather than the logistics of finding a court."
+                    </p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a young athlete looking confident and relaxed. The lighting is soft and natural, emphasizing a calm and focused demeanor. The background is slightly blurred out, featuring a modern, minimalist indoor tennis court setting in muted sage and off-white tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeroE-ybHVZO8Uozx3welnvjuAsosrxzyQ5K6DzORDQgeYY4Ms98BZnhuDCJrW5zB5Dt7jqdKN2pwwYd9b7Bq38J2v34o2qYlhV1P1B8cHxbwSpiJPTOz6KcAeXgT2rZXrcw1ACsSOGMzALK5mg-x-ebFGw6nJ22T9iJS-oY_sDH-mhQpepYgLRJMIkFjEqOWzt0AxXOI64Cu-zsV4on0FPuDlIhzmgcl1-KWQP9mtAAcPzKQ_mw93TA">
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-primary-fixed">Budi Santoso</p>
+<p class="font-body-md text-[12px] text-primary-fixed-dim">Tennis Enthusiast</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="snapdom-sandbox" data-snapdom-sandbox="true" aria-hidden="true" style="position: absolute; left: -9999px; top: -9999px; width: 0px; height: 0px; overflow: hidden;"></div></body></html>

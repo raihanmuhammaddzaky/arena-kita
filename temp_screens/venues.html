@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="en" class="light" style=""><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary-container": "#171c1f",
+                        "surface-container-highest": "#d8e3fb",
+                        "on-error-container": "#93000a",
+                        "on-error": "#ffffff",
+                        "secondary-fixed-dim": "#4edea3",
+                        "secondary": "#006c49",
+                        "surface-container": "#e7eeff",
+                        "tertiary-fixed-dim": "#c3c7cb",
+                        "on-surface-variant": "#45464d",
+                        "tertiary": "#000000",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#111c2d",
+                        "on-tertiary-fixed": "#171c1f",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#f9f9ff",
+                        "background": "#f9f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "on-secondary-container": "#00714d",
+                        "surface-tint": "#565e74",
+                        "primary": "#000000",
+                        "on-secondary-fixed": "#002113",
+                        "on-primary-fixed": "#131b2e",
+                        "tertiary-fixed": "#dfe3e7",
+                        "on-background": "#111c2d",
+                        "inverse-surface": "#263143",
+                        "inverse-primary": "#bec6e0",
+                        "surface-variant": "#d8e3fb",
+                        "primary-container": "#131b2e",
+                        "outline-variant": "#c6c6cd",
+                        "primary-fixed-dim": "#bec6e0",
+                        "surface-container-high": "#dee8ff",
+                        "secondary-container": "#6cf8bb",
+                        "on-tertiary-container": "#808488",
+                        "inverse-on-surface": "#ecf1ff",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#dae2fd",
+                        "on-secondary-fixed-variant": "#005236",
+                        "surface-bright": "#f9f9ff",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#cfdaf2",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#f0f3ff",
+                        "on-primary-container": "#7c839b",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "outline": "#76777d"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "stack-sm": "0.5rem",
+                        "stack-md": "1.5rem",
+                        "stack-lg": "3rem",
+                        "gutter": "1.5rem",
+                        "container-max": "1280px",
+                        "margin-mobile": "1rem",
+                        "margin-desktop": "2.5rem"
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"]
+                    },
+                    fontSize: {
+                        "display": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        };
+    }catch(_e){}</script><meta charset="utf-8"></head><body class="bg-surface text-on-surface font-body-md text-body-md min-h-screen flex flex-col relative antialiased">
+<div class="absolute inset-0 z-0 pattern-bg pointer-events-none"></div>
+<header class="bg-surface dark:bg-surface-container-highest text-primary dark:text-primary-fixed font-display text-body-lg w-full sticky top-0 z-50 shadow-sm dark:bg-surface-container-highest flex justify-between items-center px-margin-desktop py-4 max-w-container-max mx-auto transition-transform duration-200">
+<div class="font-display text-headline-md font-bold text-primary dark:text-primary-fixed">ArenaKita</div>
+<nav class="hidden md:flex items-center gap-6"><a href="#" class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-surface-container-low dark:hover:bg-tertiary-container transition-all px-3 py-2 rounded-lg">Beranda</a>
+<a href="#" class="text-secondary dark:text-secondary-fixed-dim font-bold border-b-2 border-secondary dark:border-secondary-fixed-dim pb-1 hover:bg-surface-container-low dark:hover:bg-tertiary-container transition-all px-3 py-2 rounded-lg">Lapangan</a>
+<a href="#" class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-surface-container-low dark:hover:bg-tertiary-container transition-all px-3 py-2 rounded-lg">Riwayat Pemesanan</a></nav>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-low transition-colors text-primary">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-low transition-colors text-primary">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<main class="flex-1 z-10 w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg">
+<section class="text-center mb-stack-lg max-w-3xl mx-auto">
+<h1 class="font-headline-lg text-headline-lg md:font-display md:text-display text-primary mb-stack-sm tracking-tight">Pesan Lapangan</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Temukan dan pesan lapangan olahraga premium yang dirancang untuk kenyamanan dan performa optimal Anda.</p>
+</section>
+<section class="bg-surface-container-lowest rounded-2xl shadow-md p-4 mb-stack-lg border border-outline-variant/20 backdrop-blur-md bg-opacity-90">
+  <div class="flex flex-col lg:flex-row items-stretch lg:items-center gap-4"><!-- Search Input -->
+    <div class="flex-1 relative">
+      <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+      <input type="text" class="w-full bg-surface-container-low text-on-surface font-body-md rounded-xl pl-12 pr-4 py-3 border-none focus:ring-2 focus:ring-secondary outline-none" placeholder="Venue Name or Location">
+    </div>
+    
+    <!-- Date Picker -->
+    <div class="lg:w-48 relative">
+      <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">calendar_today</span>
+      <input type="text" class="w-full bg-surface-container-low text-on-surface font-body-md rounded-xl pl-12 pr-4 py-3 border-none focus:ring-2 focus:ring-secondary outline-none cursor-pointer" placeholder="Select Date" readonly="" value="Today, 24 Oct">
+    </div>
+
+    <!-- Start Time -->
+    <div class="lg:w-40 relative">
+      <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">schedule</span>
+      <select class="w-full bg-surface-container-low text-on-surface font-body-md rounded-xl pl-12 pr-4 py-3 border-none focus:ring-2 focus:ring-secondary outline-none cursor-pointer appearance-none">
+        <option>Start Time</option>
+        <option>08:00</option>
+        <option>09:00</option>
+        <option>10:00</option>
+      </select>
+    </div>
+
+    <!-- End Time -->
+    <div class="lg:w-40 relative">
+      <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">history</span>
+      <select class="w-full bg-surface-container-low text-on-surface font-body-md rounded-xl pl-12 pr-4 py-3 border-none focus:ring-2 focus:ring-secondary outline-none cursor-pointer appearance-none">
+        <option>End Time</option>
+        <option>10:00</option>
+        <option>11:00</option>
+        <option>12:00</option>
+      </select>
+    </div>
+
+    <!-- Search Button -->
+    <button class="bg-secondary text-on-secondary px-8 py-3 rounded-xl font-label-md hover:bg-on-secondary-container transition-colors shadow-sm flex items-center justify-center gap-2">
+      Search
+    </button></div>
+
+  <!-- Secondary Controls -->
+  
+</section>
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<article class="md:col-span-2 bg-surface-container-lowest rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row group transition-all duration-300 hover:shadow-lg border border-outline-variant/20">
+<div class="w-full md:w-1/2 relative h-64 md:h-auto overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A bright, high-quality photograph of a premium indoor futsal court with polished green artificial turf. The space is illuminated by soft, natural light filtering through large windows, creating a calm and inviting atmosphere. The aesthetic is clean, modern, and minimalist, emphasizing high-end community sports facilities. Subtle sage green architectural accents are visible in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAp34cONLutwfp2CBySe9-qeKNmx-MtRENXwZJ24zbUifV3R1ThnXGvVyV_qzoZjATvDUx6JMflHk-COxtmTSmBFOq29qhnadMBagd3kmBcNOZeOMG4eFmtFMR2PUiaa2h4xllV5qT3uINo3zbjLiRzL1Uz2n4E38tTusS_-PmZflDUtuub8tEy_exbKPBrXsWjgy-NY5AhFx1YErCb0ZxyT4thmN7Cx2avec-LDUSkNVw88AY9E6Vvdg">
+<div class="absolute top-4 left-4 bg-surface-container-lowest/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-[#f59e0b]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md text-on-surface">4.9</span>
+</div>
+<div class="absolute top-4 right-4 bg-secondary-container text-on-secondary-container backdrop-blur-sm px-3 py-1 rounded-full shadow-sm">
+<span class="font-label-md text-label-md font-bold">Tersedia</span>
+</div>
+</div>
+<div class="w-full md:w-1/2 p-gutter flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 mb-2 text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="">Jakarta Selatan</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-stack-sm group-hover:text-secondary transition-colors">Premium Futsal Arena A</h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-4">Fasilitas premium dengan rumput sintetis standar internasional, ruang ganti VIP, dan tribun penonton yang nyaman untuk komunitas Anda.</p>
+</div>
+<div class="flex items-center justify-between mt-auto">
+<div>
+<span class="font-label-md text-label-md text-on-surface-variant block mb-1">Mulai dari</span>
+<span class="font-headline-md text-headline-md text-secondary">Rp 150k<span class="font-body-md text-body-md text-on-surface-variant">/jam</span></span>
+</div>
+<button class="bg-secondary text-on-secondary px-6 py-3 rounded-lg font-label-md text-label-md hover:bg-on-secondary-container transition-colors shadow-sm flex items-center gap-2">
+                            Lihat Detail <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<article class="bg-surface-container-lowest rounded-xl shadow-md overflow-hidden flex flex-col group transition-all duration-300 hover:shadow-lg border border-outline-variant/20">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A beautiful outdoor tennis court with pristine blue and green hardcourt surfaces. The court is surrounded by subtle landscaping and elegant fencing under a clear, bright sky. The lighting highlights the crisp lines of the court, projecting a calm, upscale, and modern sporty vibe. Gentle shadows stretch across the playing surface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWpNvN2gu93g5BqcNgDwAhLhd5wQ-u8li7wvrhT8VtMm8cUTGDcORxETq5p0jfLxIdsMiNYeJRJQxdsJi4j-iUQ3QcX87fRykemMI0VCyXmZ8pNBjtHsHFpK8Cy4Kzp8Tcy9l5vpk4mz8QwC305BUGYPHehwbc_pyT5KEplwz-TdZsuKeCGqoG1nx5scOcLtOx9Uzkg8sqwneYNuZ6fEP0ne219Mt60EX1us-g8dEUSqMW6FrLXw_pLA">
+<div class="absolute top-4 left-4 bg-surface-container-lowest/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-[#f59e0b]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md text-on-surface">4.7</span>
+</div>
+<div class="absolute top-4 right-4 bg-[#f59e0b] text-on-primary backdrop-blur-sm px-3 py-1 rounded-full shadow-sm">
+<span class="font-label-md text-label-md font-bold">Hampir Penuh</span>
+</div>
+</div>
+<div class="p-6 flex flex-col flex-1">
+<div class="flex items-center gap-2 mb-2 text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="">Tangerang Selatan</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-auto pb-4 group-hover:text-secondary transition-colors">Serenity Tennis Club</h2>
+<div class="flex items-end justify-between pt-4 border-t border-outline-variant/30">
+<div>
+<span class="font-headline-md text-headline-md text-secondary block">Rp 200k<span class="font-body-md text-body-md text-on-surface-variant">/jam</span></span>
+</div>
+<button class="bg-surface-container text-secondary hover:bg-secondary hover:text-on-secondary px-4 py-2 rounded-lg font-label-md text-label-md transition-colors flex items-center justify-center">
+                            Detail
+                        </button>
+</div>
+</div>
+</article>
+<article class="bg-surface-container-lowest rounded-xl shadow-md overflow-hidden flex flex-col group transition-all duration-300 hover:shadow-lg border border-outline-variant/20">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="An immaculate indoor badminton court featuring professional-grade green mats and bright, diffused LED lighting. The environment is impeccably clean, minimalist, and serene, lacking any visual clutter. The calm aesthetic focuses on the structural elegance of the net and the vast, open space of the hall." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRFcuZwuk_dEttKhuMreE1Wk7NIrjedLH0Ma_Y-7FfSjSa09heSotRI0BRhkBbothXqCRcpn2CoK3oWjbIKjBqNOjXgjC9wzK3QtKQHHxEquV2EEoN4JD0XVT7xdzXTrq2xiJ5l2VS4MlSBIOrpmtIqKHFGK2ns-uwejAvBw-D-hG20CG3OOyhuw0tXXqAdkfCIgOw29_Iml24kj1LJI0rt0k6n80ufttINlcslXKMLSZR5EqJo1DgCw">
+<div class="absolute top-4 left-4 bg-surface-container-lowest/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-[#f59e0b]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md text-on-surface">4.8</span>
+</div>
+<div class="absolute top-4 right-4 bg-surface-container-high text-on-surface-variant backdrop-blur-sm px-3 py-1 rounded-full shadow-sm">
+<span class="font-label-md text-label-md font-bold">Maintenance</span>
+</div>
+</div>
+<div class="p-6 flex flex-col flex-1">
+<div class="flex items-center gap-2 mb-2 text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="">Jakarta Barat</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-auto pb-4 group-hover:text-secondary transition-colors">Oasis Badminton Hall</h2>
+<div class="flex items-end justify-between pt-4 border-t border-outline-variant/30">
+<div>
+<span class="font-headline-md text-headline-md text-secondary block">Rp 85k<span class="font-body-md text-body-md text-on-surface-variant">/jam</span></span>
+</div>
+<button class="bg-surface-container text-secondary hover:bg-secondary hover:text-on-secondary px-4 py-2 rounded-lg font-label-md text-label-md transition-colors flex items-center justify-center">
+                            Detail
+                        </button>
+</div>
+</div>
+</article>
+<article class="bg-surface-container-lowest rounded-xl shadow-md overflow-hidden flex flex-col group transition-all duration-300 hover:shadow-lg border border-outline-variant/20">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A modern, high-end indoor basketball court with highly polished hardwood floors reflecting soft, ambient overhead lighting. The space feels expansive and elegant, with muted colors and minimalist architectural details. A lone basketball sits quietly near the key, conveying a sense of calm anticipation and focused sportsmanship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjHwACucy1udZCAwIhPwRbRbnb3siD6f7Yrt_7QMW4hPu24T7YZv3GydSq1SGzxVVmLpk9QD-JnZl9ohHKHDWci5NtnfDEF3uyHoIj5IUsdpedEqFud-Tjko5pB1SFFWCW-397eBAak7nTGXVP5OH0x29AZ-wv21kia_0qKuRgfqGNJ77l76I5TVpdgKHtxJJyLOB-hQ2sbZc5Q6keXDPomVhT78wPG8dmEtl_1LhbPDWa6LxxELPXfg">
+<div class="absolute top-4 left-4 bg-surface-container-lowest/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-[#f59e0b]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md text-on-surface">4.6</span>
+</div>
+<div class="absolute top-4 right-4 bg-secondary-container text-on-secondary-container backdrop-blur-sm px-3 py-1 rounded-full shadow-sm">
+<span class="font-label-md text-label-md font-bold">Tersedia</span>
+</div>
+</div>
+<div class="p-6 flex flex-col flex-1">
+<div class="flex items-center gap-2 mb-2 text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="">Jakarta Pusat</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-auto pb-4 group-hover:text-secondary transition-colors">Elite Hoops Center</h2>
+<div class="flex items-end justify-between pt-4 border-t border-outline-variant/30">
+<div>
+<span class="font-headline-md text-headline-md text-secondary block">Rp 250k<span class="font-body-md text-body-md text-on-surface-variant">/jam</span></span>
+</div>
+<button class="bg-surface-container text-secondary hover:bg-secondary hover:text-on-secondary px-4 py-2 rounded-lg font-label-md text-label-md transition-colors flex items-center justify-center">
+                            Detail
+                        </button>
+</div>
+</div>
+</article>
+<article class="bg-surface-container-lowest rounded-xl shadow-md overflow-hidden flex flex-col group transition-all duration-300 hover:shadow-lg border border-outline-variant/20 opacity-75">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale-[20%]" data-alt="A top-tier padel tennis court enclosed in sleek glass walls, situated outdoors but shielded by an elegant architectural canopy. The artificial turf is a striking, deep oceanic blue. The setting is luxurious and calm, captured during the golden hour with soft, warm sunlight casting long, gentle shadows across the court surface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMMZ1BlkYZ3xZWoabAPDzS9Wyg0w79e-5ObqnX_WL2HY8NORMfVnqA8M2Chv7yderEqaxdBor6oSdthAW-OeTDSvdcCoMjSUEdjjaHQ0wU9ea1gqs-TqMPViMisarkE47_KhyMi-PdtJBJRxqgYx0llaWcuClPFQxpzJbMXZzLNtYsHvV0zUkZEDtdsprZ02vP3eA45gpAD0Id29QmLO471TBkYa_PqWRb58CM98WUmXm4E-lJQQK1gQ">
+<div class="absolute top-4 left-4 bg-surface-container-lowest/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-[#f59e0b]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md text-on-surface">5.0</span>
+</div>
+<div class="absolute inset-0 flex items-center justify-center bg-background/40 backdrop-blur-[2px]">
+<span class="bg-error/90 text-on-error px-4 py-2 rounded-full font-label-md text-label-md font-bold shadow-md backdrop-blur-sm">Penuh Hari Ini</span>
+</div>
+</div>
+<div class="p-6 flex flex-col flex-1">
+<div class="flex items-center gap-2 mb-2 text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="">Depok</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-auto pb-4 group-hover:text-secondary transition-colors">Lumina Padel Club</h2>
+<div class="flex items-end justify-between pt-4 border-t border-outline-variant/30">
+<div>
+<span class="font-headline-md text-headline-md text-secondary block">Rp 300k<span class="font-body-md text-body-md text-on-surface-variant">/jam</span></span>
+</div>
+<button class="bg-surface-container-high text-on-surface-variant px-4 py-2 rounded-lg font-label-md text-label-md cursor-not-allowed flex items-center justify-center">
+                            Detail
+                        </button>
+</div>
+</div>
+</article>
+</section>
+<div class="flex justify-center mt-stack-lg">
+<button class="px-8 py-3 rounded-full border border-outline text-on-surface font-label-md text-label-md hover:bg-surface-container-low transition-colors shadow-sm flex items-center gap-2">
+                Muat Lebih Banyak <span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+</div>
+</main>
+<footer class="bg-surface-container-low dark:bg-tertiary-container text-on-surface dark:text-on-tertiary-fixed font-body-md text-body-md w-full mt-stack-lg bg-surface-container-low dark:bg-tertiary-container flex flex-col md:flex-row justify-between items-center px-margin-desktop py-stack-md max-w-container-max mx-auto z-10 relative">
+<div class="font-display text-headline-md font-bold text-primary dark:text-primary-fixed mb-4 md:mb-0">ArenaKita</div>
+<nav class="flex flex-wrap justify-center gap-6 mb-4 md:mb-0">
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-secondary dark:hover:text-secondary-fixed transition-colors hover:underline decoration-secondary dark:decoration-secondary-fixed transition-opacity duration-200 hover:opacity-80" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-secondary dark:hover:text-secondary-fixed transition-colors hover:underline decoration-secondary dark:decoration-secondary-fixed transition-opacity duration-200 hover:opacity-80" href="#">Terms of Service</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-secondary dark:hover:text-secondary-fixed transition-colors hover:underline decoration-secondary dark:decoration-secondary-fixed transition-opacity duration-200 hover:opacity-80" href="#">Contact Us</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-secondary dark:hover:text-secondary-fixed transition-colors hover:underline decoration-secondary dark:decoration-secondary-fixed transition-opacity duration-200 hover:opacity-80" href="#">Partner with Us</a>
+</nav>
+<div class="text-on-surface-variant text-sm">© 2024 ArenaKita. Elevating Community Sports.</div>
+</footer>
+
+
+
+
+
+</body></html>

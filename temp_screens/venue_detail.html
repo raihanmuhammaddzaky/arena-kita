@@ -1,0 +1,342 @@
+<!DOCTYPE html><html lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Field Detail &amp; Booking Form - ArenaKita</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-container": "#00714d",
+                      "primary": "#000000",
+                      "on-error": "#ffffff",
+                      "surface-container-high": "#dee8ff",
+                      "tertiary-fixed": "#dfe3e7",
+                      "outline-variant": "#c6c6cd",
+                      "surface-container-highest": "#d8e3fb",
+                      "on-primary-fixed": "#131b2e",
+                      "on-primary-container": "#7c839b",
+                      "secondary": "#006c49",
+                      "surface-tint": "#565e74",
+                      "on-surface": "#111c2d",
+                      "tertiary-container": "#171c1f",
+                      "on-primary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-bright": "#f9f9ff",
+                      "surface-container-low": "#f0f3ff",
+                      "primary-fixed-dim": "#bec6e0",
+                      "on-error-container": "#93000a",
+                      "tertiary-fixed-dim": "#c3c7cb",
+                      "background": "#f9f9ff",
+                      "inverse-on-surface": "#ecf1ff",
+                      "inverse-primary": "#bec6e0",
+                      "secondary-container": "#6cf8bb",
+                      "outline": "#76777d",
+                      "secondary-fixed": "#6ffbbe",
+                      "surface": "#f9f9ff",
+                      "on-tertiary-container": "#808488",
+                      "on-secondary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "secondary-fixed-dim": "#4edea3",
+                      "on-secondary-fixed-variant": "#005236",
+                      "on-tertiary-fixed-variant": "#43474b",
+                      "surface-container": "#e7eeff",
+                      "surface-variant": "#d8e3fb",
+                      "on-secondary-fixed": "#002113",
+                      "surface-dim": "#cfdaf2",
+                      "on-background": "#111c2d",
+                      "primary-container": "#131b2e",
+                      "on-tertiary": "#ffffff",
+                      "inverse-surface": "#263143",
+                      "error": "#ba1a1a",
+                      "primary-fixed": "#dae2fd",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "on-tertiary-fixed": "#171c1f",
+                      "on-surface-variant": "#45464d",
+                      "tertiary": "#000000"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-desktop": "2.5rem",
+                      "stack-sm": "0.5rem",
+                      "margin-mobile": "1rem",
+                      "stack-lg": "3rem",
+                      "gutter": "1.5rem",
+                      "container-max": "1280px",
+                      "stack-md": "1.5rem"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "display": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "label-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-lg": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-lg-mobile": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-lg": [
+                              "Plus Jakarta Sans"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .batik-pattern {
+            background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 0c11.046 0 20 8.954 20 20s-8.954 20-20 20S0 31.046 0 20 8.954 0 20 0zm0 2c-9.941 0-18 8.059-18 18s8.059 18 18 18 18-8.059 18-18S29.941 2 20 2z" fill="%23111c2d" fill-opacity="0.03" fill-rule="evenodd"/></svg>');
+            background-repeat: repeat;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col font-body-md">
+<!-- TopNavBar -->
+<nav class="sticky top-0 w-full z-50 bg-surface/80 backdrop-blur-md shadow-sm border-b-0">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
+<a class="font-headline-md text-headline-md font-bold text-primary" href="#">ArenaKita</a>
+<div class="hidden md:flex gap-gutter items-center">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors hover:opacity-80 transition-opacity" href="#">Beranda</a>
+<a class="font-label-md text-label-md text-primary font-bold border-b-2 border-secondary hover:opacity-80 transition-opacity" href="#">Lapangan</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors hover:opacity-80 transition-opacity" href="#">Riwayat Pemesanan</a>
+</div>
+<div class="flex items-center gap-4">
+
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden cursor-pointer transition-all duration-200 active:scale-95 shadow-sm">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A clean, minimalist portrait avatar of a young professional with soft lighting and a warm, inviting smile against a light gray background. Calm and elegant aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfNxjXEJjIKhq6C7lTwknad0mcwFkfnZfrJtYWNHNyUPrzHsJtPNewt-EKj4RJ5cunaT57anZ_kjj1ZNUxkvlpjtFc9AYjCMtI2_2tlGChufMFaJVAwcY0ppYixJtqTTPPJmNvcBifOvNwvZKoLl_spalZz01R2oaY50sBbTfRPr2epkTsMFD71JrWYxN1AjHpNgv7B4Cl2c_nVtX6qHpgncCR-rv6dwX0DlNj8pVM_PdIuIZPiIzUEw">
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow py-stack-lg relative">
+<div class="absolute inset-0 batik-pattern pointer-events-none z-0"></div>
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop relative z-10">
+<div class="mb-stack-md">
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+                    Kembali ke Pencarian
+                </button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column (Field Information) -->
+<div class="lg:col-span-7 flex flex-col gap-stack-md">
+<div class="flex flex-col gap-4">
+<!-- Main Display -->
+<div class="relative rounded-2xl overflow-hidden shadow-md bg-surface-container-lowest h-[400px] group">
+<img alt="Premium Futsal Court Main View" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkP-Pwa93SXR18SMcYhueYieqAJ-BZiDkMp013QY5tSZGfXgbUEZUQT4ryUB1lnVcBdnCYd-jkVgAtetqyVgqPScEuaIxqLNsnNn5SbzGbyBatxfhCUSDtUhIqCE_AFmZXxHFd1otQ8WNIXHIiptZbeCw006LmWwSYvjSE-dy5V7PIO--hYxPk1rM0gIYXe3wCR1ItFIT4XPXfdaRPyDhfW8VoS2UShpR324jm1pNRHeELCEpvuBzF8g">
+<!-- Navigation Arrows -->
+<button class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm flex items-center justify-center text-primary shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-surface-container-lowest">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm flex items-center justify-center text-primary shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-surface-container-lowest">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+<!-- Thumbnails -->
+<div class="grid grid-cols-4 gap-4">
+<div class="aspect-video rounded-lg overflow-hidden border-2 border-secondary cursor-pointer shadow-sm">
+<img alt="Thumbnail 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkP-Pwa93SXR18SMcYhueYieqAJ-BZiDkMp013QY5tSZGfXgbUEZUQT4ryUB1lnVcBdnCYd-jkVgAtetqyVgqPScEuaIxqLNsnNn5SbzGbyBatxfhCUSDtUhIqCE_AFmZXxHFd1otQ8WNIXHIiptZbeCw006LmWwSYvjSE-dy5V7PIO--hYxPk1rM0gIYXe3wCR1ItFIT4XPXfdaRPyDhfW8VoS2UShpR324jm1pNRHeELCEpvuBzF8g">
+</div>
+<div class="aspect-video rounded-lg overflow-hidden border border-outline-variant/30 cursor-pointer hover:border-secondary/50 transition-colors">
+<img alt="Thumbnail 2" class="w-full h-full object-cover opacity-70 hover:opacity-100 transition-opacity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkP-Pwa93SXR18SMcYhueYieqAJ-BZiDkMp013QY5tSZGfXgbUEZUQT4ryUB1lnVcBdnCYd-jkVgAtetqyVgqPScEuaIxqLNsnNn5SbzGbyBatxfhCUSDtUhIqCE_AFmZXxHFd1otQ8WNIXHIiptZbeCw006LmWwSYvjSE-dy5V7PIO--hYxPk1rM0gIYXe3wCR1ItFIT4XPXfdaRPyDhfW8VoS2UShpR324jm1pNRHeELCEpvuBzF8g">
+</div>
+<div class="aspect-video rounded-lg overflow-hidden border border-outline-variant/30 cursor-pointer hover:border-secondary/50 transition-colors">
+<img alt="Thumbnail 3" class="w-full h-full object-cover opacity-70 hover:opacity-100 transition-opacity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkP-Pwa93SXR18SMcYhueYieqAJ-BZiDkMp013QY5tSZGfXgbUEZUQT4ryUB1lnVcBdnCYd-jkVgAtetqyVgqPScEuaIxqLNsnNn5SbzGbyBatxfhCUSDtUhIqCE_AFmZXxHFd1otQ8WNIXHIiptZbeCw006LmWwSYvjSE-dy5V7PIO--hYxPk1rM0gIYXe3wCR1ItFIT4XPXfdaRPyDhfW8VoS2UShpR324jm1pNRHeELCEpvuBzF8g">
+</div>
+<div class="aspect-video rounded-lg overflow-hidden border border-outline-variant/30 cursor-pointer hover:border-secondary/50 transition-colors">
+<img alt="Thumbnail 4" class="w-full h-full object-cover opacity-70 hover:opacity-100 transition-opacity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkP-Pwa93SXR18SMcYhueYieqAJ-BZiDkMp013QY5tSZGfXgbUEZUQT4ryUB1lnVcBdnCYd-jkVgAtetqyVgqPScEuaIxqLNsnNn5SbzGbyBatxfhCUSDtUhIqCE_AFmZXxHFd1otQ8WNIXHIiptZbeCw006LmWwSYvjSE-dy5V7PIO--hYxPk1rM0gIYXe3wCR1ItFIT4XPXfdaRPyDhfW8VoS2UShpR324jm1pNRHeELCEpvuBzF8g">
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-stack-sm">
+<div class="flex flex-col md:flex-row md:justify-between md:items-end gap-2">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary">Lapangan Karpet Premium A</h1>
+<div class="font-headline-md text-headline-md text-on-surface">
+                                Rp 50.000 <span class="font-body-md text-body-md text-on-surface-variant">/ Jam</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="inline-flex items-center gap-1 px-3 py-1 bg-surface-container text-on-surface-variant rounded-full font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px]">sports_soccer</span>
+                                Futsal
+                            </span>
+<span class="inline-flex items-center gap-1 px-3 py-1 bg-surface-container text-on-surface-variant rounded-full font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px]">ac_unit</span>
+                                AC / Ventilasi
+                            </span>
+<span class="inline-flex items-center gap-1 px-3 py-1 bg-surface-container text-on-surface-variant rounded-full font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px]">lightbulb</span>
+                                Premium Lighting
+                            </span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/30 flex flex-col gap-4">
+<h2 class="font-headline-md text-headline-md text-primary">Deskripsi Lapangan</h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            Nikmati pengalaman bermain maksimal di Lapangan Karpet Premium A. Lapangan ini dilengkapi dengan lantai vinyl premium berkualitas tinggi yang memberikan pijakan yang stabil dan mengurangi risiko cedera. Sistem pencahayaan modern memastikan visibilitas optimal tanpa silau, sementara sirkulasi udara yang sangat baik menjaga kenyamanan Anda selama pertandingan.
+                        </p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/30 flex flex-col gap-4">
+<h2 class="font-headline-md text-headline-md text-primary">Lokasi</h2>
+<div class="h-48 rounded-xl overflow-hidden bg-surface-container relative">
+<img alt="Map Location" class="w-full h-full object-cover" data-alt="A clean, highly stylized, minimalist map view of Jakarta, Indonesia, with soft slate and sage tones. The map avoids cluttered labels and heavy contrast, focusing on smooth roads and a premium location pin marking a central spot. Calm, modern corporate aesthetic." data-location="Jakarta" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDK5tlKBrzv6QqwD56CalmbONYqUgYiz5GpKQm9aZsK9OVc-ayCyqw5OJsH0DaP6Piv3M95D5bPW8JezUnedrRDtNslxx4qp_a21ybQwDevPsZXs50eaDE6cXnjZPs7ufsaEgGp9zpgamiRw4I3RvOoSCPcNGs-cK4Ruiyv92UJTAAN35JUf4RmlLZ52bPUwl80amHgcu3fePgROYG7NXQvCB3gQ8QMvDyQmDov0v34ZBs_y4NyVoZo5A">
+<div class="absolute bottom-4 left-4 bg-surface-container-lowest/90 backdrop-blur-sm p-3 rounded-lg shadow-sm">
+<p class="font-label-md text-label-md text-primary">ArenaKita Sports Center</p>
+<p class="font-body-md text-sm text-on-surface-variant">Jl. Sudirman No. 123, Jakarta</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column (Interactive Booking Card) -->
+<div class="lg:col-span-5">
+<div class="bg-surface-container-lowest rounded-2xl shadow-md p-6 lg:p-8 sticky top-24 border border-outline-variant/20 flex flex-col gap-stack-md">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary mb-4">Pesan Jadwal</h2>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2" for="booking-date">Pilih Tanggal Main</label>
+<input class="w-full bg-surface text-on-surface font-body-md text-body-md border border-outline-variant rounded-xl p-3 focus:ring-2 focus:ring-secondary focus:border-secondary transition-all outline-none" id="booking-date" type="date" value="2023-11-15">
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-3">Pilih Jam Tersedia</label>
+<div class="flex flex-col gap-4">
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface-variant" for="start-time">Jam Mulai</label>
+<select class="w-full bg-surface text-on-surface font-body-md text-body-md border border-outline-variant rounded-xl p-3 focus:ring-2 focus:ring-secondary focus:border-secondary transition-all outline-none appearance-none" id="start-time">
+<option value="18:00">18:00</option>
+<option value="18:30">18:30</option>
+<option selected="" value="19:00">19:00</option>
+<option value="19:30">19:30</option>
+<option value="20:00">20:00</option>
+<option value="20:30">20:30</option>
+<option value="21:00">21:00</option>
+<option value="21:30">21:30</option>
+<option value="22:00">22:00</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface-variant" for="end-time">Jam Selesai</label>
+<select class="w-full bg-surface text-on-surface font-body-md text-body-md border border-outline-variant rounded-xl p-3 focus:ring-2 focus:ring-secondary focus:border-secondary transition-all outline-none appearance-none" id="end-time">
+<option value="19:00">19:00</option>
+<option value="19:30">19:30</option>
+<option value="20:00">20:00</option>
+<option value="20:30">20:30</option>
+<option selected="" value="21:00">21:00</option>
+<option value="21:30">21:30</option>
+<option value="22:00">22:00</option>
+<option value="22:30">22:30</option>
+<option value="23:00">23:00</option>
+</select>
+</div>
+</div>
+<p class="text-sm text-on-surface-variant font-body-md italic">* Minimal booking 1 jam, maksimal 3 jam.</p>
+</div>
+</div>
+<hr class="border-outline-variant/30">
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center text-on-surface-variant font-body-md text-body-md">
+<span class="">Durasi:</span>
+<span class="font-label-md text-label-md">2 Jam</span>
+</div>
+<div class="flex justify-between items-center text-primary font-headline-md text-headline-md">
+<span class="">Total Bayar:</span>
+<span class="">Rp 100.000</span>
+</div>
+</div>
+<button class="w-full bg-secondary hover:bg-secondary/90 text-on-secondary font-label-md text-label-md py-4 rounded-xl shadow-sm transition-all duration-200 active:scale-95 flex justify-center items-center gap-2">
+                            Booking &amp; Kunci Jadwal
+                            <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low w-full rounded-t-xl mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-stack-md max-w-container-max mx-auto gap-gutter">
+<div class="font-headline-md text-headline-md font-bold text-primary">ArenaKita</div>
+<div class="flex flex-wrap gap-4 justify-center">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Privacy Policy</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Terms</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Contact</a>
+</div>
+<div class="font-label-md text-label-md text-on-surface-variant">© 2024 ArenaKita. All rights reserved.</div>
+</div>
+</footer>
+
+
+</body></html>

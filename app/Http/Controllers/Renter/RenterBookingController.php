@@ -38,19 +38,34 @@ class RenterBookingController extends Controller
             }
 
             if ($status) {
-                $query->where('status', $status);
+                if ($status === 'completed') {
+                    $query->where('status', 'confirmed')
+                          ->whereRaw('CONCAT(booking_date, " ", end_time) < ?', [Carbon::now()]);
+                } elseif ($status === 'confirmed') {
+                    $query->where('status', 'confirmed')
+                          ->whereRaw('CONCAT(booking_date, " ", end_time) >= ?', [Carbon::now()]);
+                } else {
+                    $query->where('status', $status);
+                }
             }
 
             $bookingsRaw = $query->orderBy('booking_date', 'desc')->get();
 
             $bookings = $bookingsRaw->map(function ($booking) {
+                // Kalkulasi status dinamis: jika confirmed dan waktunya sudah lewat, maka completed
+                $endDateTime = Carbon::parse($booking->booking_date->format('Y-m-d') . ' ' . $booking->end_time);
+                $isCompleted = $booking->status === 'confirmed' && $endDateTime->isPast();
+                
+                $actualStatus = $isCompleted ? 'completed' : $booking->status;
+
                 $statusMap = [
                     'pending' => ['label' => 'Pending', 'color' => 'bg-[#f59e0b] text-on-primary'],
                     'confirmed' => ['label' => 'Confirmed', 'color' => 'bg-tertiary-fixed text-on-tertiary-fixed-variant'],
+                    'completed' => ['label' => 'Completed', 'color' => 'bg-[#3b82f6] text-white'],
                     'cancelled' => ['label' => 'Cancelled', 'color' => 'bg-surface-variant text-on-surface-variant'],
                 ];
 
-                $status = $statusMap[$booking->status] ?? ['label' => ucfirst($booking->status), 'color' => 'bg-surface-variant text-on-surface-variant'];
+                $status = $statusMap[$actualStatus] ?? ['label' => ucfirst($actualStatus), 'color' => 'bg-surface-variant text-on-surface-variant'];
 
                 return (object) [
                     'id' => $booking->id,

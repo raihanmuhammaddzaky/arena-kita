@@ -130,33 +130,7 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
                 @foreach($featuredVenues as $venue)
-                <a href="{{ route('renter.venues.show', $venue->slug) }}" class="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/20 overflow-hidden hover:shadow-md transition-all group cursor-pointer flex flex-col h-full">
-                    <div class="h-56 relative overflow-hidden">
-                        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="{{ isset($venue->image) ? $venue->image : ($venue->mainImage ? asset($venue->mainImage->image_path) : 'https://placehold.co/600x400?text=No+Image') }}" alt="{{ $venue->name }}">
-                        <div class="absolute top-4 right-4 bg-surface-container-lowest/90 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-1 shadow-sm">
-                            <span class="material-symbols-outlined text-tertiary-fixed-dim text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="font-label-md text-label-md text-primary">{{ $venue->rating ?? '4.5' }}</span>
-                        </div>
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow relative">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-headline-md text-primary text-[20px] line-clamp-1">{{ $venue->name }}</h3>
-                            <span class="bg-surface-container-low text-on-surface font-label-md text-label-md px-2 py-1 rounded-md text-[12px] whitespace-nowrap">{{ $venue->type ?? 'Indoor' }}</span>
-                        </div>
-                        <p class="font-body-md text-body-md text-on-surface-variant mb-4 flex items-center gap-1 text-sm">
-                            <span class="material-symbols-outlined text-[16px]">location_on</span> {{ $venue->address }}
-                        </p>
-                        <div class="mt-auto flex justify-between items-center pt-4 border-t border-outline-variant/20">
-                            <div>
-                                <span class="font-headline-md text-primary text-[18px]">Rp {{ number_format($venue->price ?? 150000, 0, ',', '.') }}</span>
-                                <span class="font-body-md text-on-surface-variant text-[14px]">/jam</span>
-                            </div>
-                            <span class="text-on-tertiary-fixed-variant font-label-md group-hover:underline flex items-center">
-                                Booking <span class="material-symbols-outlined text-[18px] ml-1">arrow_forward</span>
-                            </span>
-                        </div>
-                    </div>
-                </a>
+                <x-venue-card :venue="$venue" />
                 @endforeach
             </div>
         </section>

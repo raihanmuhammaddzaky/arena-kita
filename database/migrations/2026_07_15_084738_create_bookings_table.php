@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
+            $table->string('booking_code')->unique();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('venue_id')->constrained()->cascadeOnDelete();
             $table->date('booking_date')->index();
             $table->time('start_time');
             $table->time('end_time');
             $table->unsignedBigInteger('total_price');
-            $table->enum('status', ['unpaid', 'pending_verification', 'confirmed', 'cancelled'])->default('unpaid');
+            $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
             $table->timestamps();
             
             $table->index(['venue_id', 'booking_date']);

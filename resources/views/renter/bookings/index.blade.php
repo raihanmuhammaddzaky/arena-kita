@@ -9,34 +9,45 @@
     </header>
 
     <!-- Filter Bar -->
-    <div class="bg-surface-container-lowest p-4 rounded-2xl shadow-sm border border-outline-variant/30 mb-stack-lg flex flex-col md:flex-row gap-4 items-center">
-        <div class="flex-grow w-full md:w-auto flex items-center border border-outline-variant/50 rounded-xl px-4 py-3 bg-surface focus-within:border-primary transition-all">
-            <span class="material-symbols-outlined text-on-surface-variant mr-3">search</span>
-            <input type="text" placeholder="Cari nomor pesanan atau nama venue..." class="w-full bg-transparent border-none focus:ring-0 font-body-md text-on-surface placeholder:text-on-surface-variant/70">
-        </div>
-        
-        <div class="flex w-full md:w-auto gap-4">
-            <div class="flex-grow flex items-center border border-outline-variant/50 rounded-xl px-4 py-3 bg-surface focus-within:border-primary transition-all">
-                <select class="w-full bg-transparent border-none focus:ring-0 font-body-md text-on-surface appearance-none outline-none">
-                    <option value="">Semua Tanggal</option>
-                    <option value="today">Hari Ini</option>
-                    <option value="week">Minggu Ini</option>
-                    <option value="month">Bulan Ini</option>
-                </select>
-                <span class="material-symbols-outlined text-on-surface-variant pointer-events-none">expand_more</span>
+    <form action="{{ route('renter.bookings.index') }}" method="GET" class="bg-surface-container-lowest p-4 rounded-2xl shadow-sm border border-outline-variant/30 mb-stack-lg flex flex-col gap-4">
+        <div class="flex flex-col md:flex-row gap-4 items-center">
+            <div class="flex-grow w-full md:w-auto flex items-center border border-outline-variant/50 rounded-xl px-4 py-3 bg-surface focus-within:border-primary transition-all">
+                <span class="material-symbols-outlined text-on-surface-variant mr-3">search</span>
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nomor pesanan atau nama venue..." class="w-full bg-transparent border-transparent focus:border-transparent focus:ring-0 outline-none font-body-md text-on-surface placeholder:text-on-surface-variant/70">
             </div>
             
-            <div class="flex-grow flex items-center border border-outline-variant/50 rounded-xl px-4 py-3 bg-surface focus-within:border-primary transition-all">
-                <select class="w-full bg-transparent border-none focus:ring-0 font-body-md text-on-surface appearance-none outline-none">
-                    <option value="">Semua Status</option>
-                    <option value="pending">Menunggu Pembayaran</option>
-                    <option value="success">Berhasil</option>
-                    <option value="cancelled">Dibatalkan</option>
-                </select>
-                <span class="material-symbols-outlined text-on-surface-variant pointer-events-none">expand_more</span>
+            <div class="flex w-full md:w-auto gap-4">
+                <div class="flex-grow flex items-center border border-outline-variant/50 rounded-xl px-4 py-3 bg-surface focus-within:border-primary transition-all relative">
+                    <input type="text" name="date" id="dateFilter" value="{{ request('date') }}" placeholder="Pilih Tanggal..." class="w-full bg-transparent border-transparent focus:border-transparent focus:ring-0 outline-none font-body-md text-on-surface cursor-pointer pr-8" readonly>
+                    <span class="material-symbols-outlined text-on-surface-variant pointer-events-none absolute right-4">calendar_today</span>
+                </div>
+                
+                <div class="flex-grow flex items-center border border-outline-variant/50 rounded-xl px-4 py-3 bg-surface focus-within:border-primary transition-all relative">
+                    <select name="status" class="w-full bg-transparent border-transparent focus:border-transparent focus:ring-0 outline-none font-body-md text-on-surface appearance-none pr-8 cursor-pointer">
+                        <option value="">Semua Status</option>
+                        <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                        <option value="confirmed" {{ request('status') == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
+                        <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                    </select>
+                    <span class="material-symbols-outlined text-on-surface-variant pointer-events-none absolute right-4">expand_more</span>
+                </div>
             </div>
         </div>
-    </div>
+
+        <!-- Tombol Cari & Reset -->
+        <div class="flex gap-3 justify-end">
+            @if(request('search') || request('date') || request('status'))
+                <a href="{{ route('renter.bookings.index') }}" class="inline-flex items-center gap-2 border border-outline-variant/50 text-on-surface-variant font-label-md px-5 py-2.5 rounded-xl hover:bg-surface-container transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">restart_alt</span>
+                    Reset
+                </a>
+            @endif
+            <button type="submit" class="inline-flex items-center gap-2 bg-primary text-on-primary font-label-md px-6 py-2.5 rounded-xl hover:bg-primary/90 transition-colors shadow-sm">
+                <span class="material-symbols-outlined text-[18px]">search</span>
+                Cari
+            </button>
+        </div>
+    </form>
 
     <!-- Booking List -->
     <div class="flex flex-col gap-4">
@@ -79,4 +90,20 @@
         @endforeach
     </div>
 </div>
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        flatpickr("#dateFilter", {
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altFormat: "d F Y",
+            placeholder: "Semua Tanggal",
+            allowInput: true
+        });
+    });
+</script>
+@endpush
+
 @endsection

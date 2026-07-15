@@ -25,7 +25,7 @@ class BookingSeeder extends Seeder
             'start_time' => '18:00:00',
             'end_time' => '20:00:00',
             'total_price' => $venue1->price * 2,
-            'status' => 'unpaid',
+            'status' => 'pending',
         ]);
 
         // 2. Confirmed Booking (Upcoming)

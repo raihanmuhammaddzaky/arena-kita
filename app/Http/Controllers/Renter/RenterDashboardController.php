@@ -4,89 +4,99 @@ namespace App\Http\Controllers\Renter;
 
 use App\Http\Controllers\Controller;
 use App\Models\Venue;
+use App\Models\Booking;
+use App\Models\User;
+use App\Models\Announcement;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class RenterDashboardController extends Controller
 {
     public function index()
     {
-        // Dummy data for now
-        $user = (object) ['name' => 'Budi Setiawan'];
-        
-        $unpaidBooking = (object) [
-            'id' => 1,
-            'venue_name' => 'Premium Futsal Arena A',
-            'deadline' => '15:00',
-        ];
+        // Karena belum ada sistem Login, kita pakai data user 'renter' pertama
+        $user = User::where('role', 'renter')->first() ?? (object) ['name' => 'Pengguna', 'id' => 0];
 
-        $announcements = [
-            (object) [
-                'title' => 'Pemeliharaan Lapangan',
-                'content' => 'Pemberitahuan: Lapangan Futsal A akan ditutup sementara untuk perbaikan lantai pada tanggal 25 Oktober 2024.'
-            ]
-        ];
+        // =============================================
+        // 1. MENUNGGU PEMBAYARAN (status = 'pending')
+        // =============================================
+        $unpaidBookingRaw = Booking::with('venue')
+            ->where('user_id', $user->id)
+            ->where('status', 'pending')
+            ->orderBy('created_at', 'desc')
+            ->first();
 
-        // We can still try to get real venues if they exist, or fallback to dummy
-        $featuredVenues = Venue::with('mainImage')->where('is_active', true)->take(3)->get();
-        if ($featuredVenues->isEmpty()) {
-            $featuredVenues = collect([
-                (object) [
-                    'id' => 1,
-                    'name' => 'Premium Futsal Arena A',
-                    'address' => 'Jakarta Selatan',
-                    'price' => 150000,
-                    'type' => 'Indoor',
-                    'rating' => 4.9,
-                    'image' => 'https://lh3.googleusercontent.com/aida-public/AB6AXuCpmXyvyC51LNFtCr5kEeK8XkBiunV1RxK9P0U1rY-fd4IvYqYE4gDZm0jwUciuhtkGfDmDVUFxcEeTo-tTEzi9mHRZuEjbI_FR9forR_jOLVvbxk7Lt6fhjkWWNZ4NbC6m5rzUrSTGc3i7HpqJmwv95Tt4IBN883fMY7kYha0KusvfwHicl5EIV6m2V78G0L3P9dd8TbgReIiJaconX1CCOThmwUxFSOVjkBXUY_PgRE55wcGYDF44RA',
-                ],
-                (object) [
-                    'id' => 2,
-                    'name' => 'Grand Tennis Court',
-                    'address' => 'Jakarta Pusat',
-                    'price' => 200000,
-                    'type' => 'Outdoor',
-                    'rating' => 4.7,
-                    'image' => 'https://lh3.googleusercontent.com/aida-public/AB6AXuCdEi-fxZ_GRmIPSwJfKZNvYIqRYGcm-3Gb8lrOC7EPUyvwD7H9DcUDfTtsTdENXiEvwv92VStiM9cVpLgxreKwFuxzV4WsDpJTuoW82wY6U6-ZZ07WWPyMIj60-XdF8Kjuy056vcB9EWOqVCLVVkR3DyakyKn2RyzF_HaM-uqDVMTWCS4rw3_wHr95m4uZb3AZRXgzL2vl5BQlo_2GV9c2ohhR2rQ564CO-0JOH67WQ9fZ766TH-SpUQ',
-                ],
-                (object) [
-                    'id' => 3,
-                    'name' => 'Oasis Badminton Hall',
-                    'address' => 'Jakarta Barat',
-                    'price' => 85000,
-                    'type' => 'Indoor',
-                    'rating' => 4.8,
-                    'image' => 'https://lh3.googleusercontent.com/aida-public/AB6AXuCRFcuZwuk_dEttKhuMreE1Wk7NIrjedLH0Ma_Y-7FfSjSa09heSotRI0BRhkBbothXqCRcpn2CoK3oWjbIKjBqNOjXgjC9wzK3QtKQHHxEquV2EEoN4JD0XVT7xdzXTrq2xiJ5l2VS4MlSBIOrpmtIqKHFGK2ns-uwejAvBw-D-hG20CG3OOyhuw0tXXqAdkfCIgOw29_Iml24kj1LJI0rt0k6n80ufttINlcslXKMLSZR5EqJo1DgCw',
-                ]
-            ]);
+        $unpaidBooking = null;
+        if ($unpaidBookingRaw) {
+            $unpaidBooking = (object) [
+                'id' => $unpaidBookingRaw->id,
+                'venue_name' => $unpaidBookingRaw->venue->name,
+                'deadline' => Carbon::parse($unpaidBookingRaw->created_at)->addHours(2)->format('H:i'),
+            ];
         }
 
-        // Simulating scenario where upcomingBookings is empty for testing empty state later
-        $upcomingBookings = [
-            (object) [
-                'id' => 1,
-                'venue_name' => 'Premium Futsal Arena A',
-                'date' => '25 Oktober 2024',
-                'time' => '18:00 - 20:00 WIB',
-                'status' => 'Berhasil'
-            ],
-            (object) [
-                'id' => 2,
-                'venue_name' => 'Grand Tennis Court',
-                'date' => '28 Oktober 2024',
-                'time' => '09:00 - 11:00 WIB',
-                'status' => 'Berhasil'
-            ]
-        ];
+        // =============================================
+        // 2. PAPAN PENGUMUMAN
+        // =============================================
+        $announcements = Announcement::latest()->take(2)->get();
 
-        $recentBookings = [
-            (object) [
-                'id' => 3,
-                'venue_name' => 'Oasis Badminton Hall',
-                'date' => '10 Oktober 2024',
-                'time' => '19:00 - 21:00 WIB',
-                'status' => 'Selesai'
-            ]
-        ];
+        // =============================================
+        // 3. REKOMENDASI LAPANGAN
+        // =============================================
+        $featuredVenues = Venue::with('mainImage')->where('is_active', true)->inRandomOrder()->take(3)->get();
+
+        // =============================================
+        // 4. JADWAL TERDEKAT (hanya status 'confirmed')
+        //    Booking yang sudah dibayar & tanggalnya >= hari ini
+        // =============================================
+        $upcomingBookingsRaw = Booking::with('venue')
+            ->where('user_id', $user->id)
+            ->where('status', 'confirmed')
+            ->where('booking_date', '>=', Carbon::today())
+            ->orderBy('booking_date', 'asc')
+            ->orderBy('start_time', 'asc')
+            ->take(2)
+            ->get();
+
+        $upcomingBookings = $upcomingBookingsRaw->map(function ($booking) {
+            return (object) [
+                'id' => $booking->id,
+                'venue_name' => $booking->venue->name,
+                'date' => Carbon::parse($booking->booking_date)->translatedFormat('d F Y'),
+                'time' => Carbon::parse($booking->start_time)->format('H:i') . ' - ' . Carbon::parse($booking->end_time)->format('H:i') . ' WIB',
+                'status' => 'Disewa',
+            ];
+        });
+
+        // =============================================
+        // 5. AKTIVITAS TERAKHIR
+        //    Booking yang sudah lewat tanggalnya atau cancelled
+        // =============================================
+        $recentBookingsRaw = Booking::with('venue')
+            ->where('user_id', $user->id)
+            ->where(function ($query) {
+                $query->where('booking_date', '<', Carbon::today())
+                      ->orWhere('status', 'cancelled');
+            })
+            ->orderBy('booking_date', 'desc')
+            ->take(2)
+            ->get();
+
+        $recentBookings = $recentBookingsRaw->map(function ($booking) {
+            $statusLabel = match ($booking->status) {
+                'confirmed' => 'Selesai',
+                'cancelled' => 'Dibatalkan',
+                default => ucfirst($booking->status),
+            };
+
+            return (object) [
+                'id' => $booking->id,
+                'venue_name' => $booking->venue->name,
+                'date' => Carbon::parse($booking->booking_date)->translatedFormat('d F Y'),
+                'time' => Carbon::parse($booking->start_time)->format('H:i') . ' - ' . Carbon::parse($booking->end_time)->format('H:i') . ' WIB',
+                'status' => $statusLabel,
+            ];
+        });
 
         return view('renter.dashboard', compact('user', 'unpaidBooking', 'announcements', 'featuredVenues', 'upcomingBookings', 'recentBookings'));
     }

@@ -148,14 +148,17 @@
                     </div>
                 </div>
 
-                <form action="#" method="POST" class="flex flex-col gap-4">
+                <form action="{{ route('renter.venues.book', $venue->id) }}" method="POST" class="flex flex-col gap-4">
                     @csrf
                     <div>
                         <label class="font-label-md text-on-surface mb-2 block">Pilih Tanggal</label>
                         <div class="flex items-center border border-outline-variant/50 rounded-xl px-4 py-3 bg-surface focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
                             <span class="material-symbols-outlined text-on-surface-variant mr-3">calendar_today</span>
-                            <input type="date" class="bg-transparent border-none focus:ring-0 font-body-md text-on-surface w-full" value="{{ date('Y-m-d') }}">
+                            <input type="date" name="date" class="bg-transparent border-none focus:ring-0 font-body-md text-on-surface w-full" value="{{ date('Y-m-d') }}">
                         </div>
+                        @error('date')
+                            <p class="text-error font-body-md text-[12px] mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="mb-4">
@@ -170,6 +173,15 @@
                         <input type="hidden" name="start_time" id="start_time" required>
                         <input type="hidden" name="end_time" id="end_time" required>
                         <p id="selection-error" class="text-error font-body-md text-[12px] mt-2 hidden">Pilih minimal 1 slot waktu.</p>
+                        @error('start_time')
+                            <p class="text-error font-body-md text-[12px] mt-1">{{ $message }}</p>
+                        @enderror
+                        @if(session('error'))
+                            <div class="bg-error/10 text-error p-3 rounded-lg font-body-md text-[14px] mt-2 flex items-start gap-2">
+                                <span class="material-symbols-outlined text-[18px]">error</span>
+                                {{ session('error') }}
+                            </div>
+                        @endif
                     </div>
 
                     <div class="bg-surface-container-low rounded-xl p-4 mt-2">
@@ -183,10 +195,10 @@
                         </div>
                     </div>
 
-                    <!-- Dummy link to redirect to payment for now -->
-                    <a href="{{ route('renter.bookings.show', 1) }}" class="bg-on-tertiary-fixed-variant text-on-primary font-label-md text-center py-4 rounded-xl mt-4 hover:bg-primary transition-colors shadow-sm w-full block">
-                        Booking & Kunci Jadwal
-                    </a>
+                    <!-- Submit Button -->
+                    <button type="submit" class="bg-on-tertiary-fixed-variant text-on-primary font-label-md text-center py-4 rounded-xl mt-4 hover:bg-primary transition-colors shadow-sm w-full block">
+                        Booking
+                    </button>
                 </form>
             </div>
         </div>

@@ -69,6 +69,7 @@ class RenterBookingController extends Controller
 
                 return (object) [
                     'id' => $booking->id,
+                    'booking_code' => $booking->booking_code,
                     'venue_name' => $booking->venue->name,
                     'date' => Carbon::parse($booking->booking_date)->translatedFormat('d M Y'),
                     'time' => Carbon::parse($booking->start_time)->format('H:i') . ' - ' . Carbon::parse($booking->end_time)->format('H:i') . ' WIB',
@@ -84,9 +85,55 @@ class RenterBookingController extends Controller
         return view('renter.bookings.index', compact('bookings'));
     }
 
-    public function show($id)
+    public function store(Request $request, $venue_id)
     {
-        $booking = Booking::with(['venue.mainImage', 'payment'])->findOrFail($id);
+        $request->validate([
+            'date' => 'required|date',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i|after:start_time',
+        ]);
+
+        // Cek overlap booking
+        $isBooked = Booking::where('venue_id', $venue_id)
+            ->where('booking_date', $request->date)
+            ->whereIn('status', ['pending', 'confirmed'])
+            ->where(function ($query) use ($request) {
+                $query->where(function ($q) use ($request) {
+                    $q->where('start_time', '<', $request->end_time)
+                      ->where('end_time', '>', $request->start_time);
+                });
+            })->exists();
+
+        if ($isBooked) {
+            return redirect()->back()->with('error', 'Maaf, jadwal ini baru saja dipesan oleh orang lain. Silakan pilih jadwal lain.');
+        }
+
+        // Kalkulasi harga
+        $venue = \App\Models\Venue::findOrFail($venue_id);
+        $duration = Carbon::parse($request->start_time)->diffInHours(Carbon::parse($request->end_time));
+        $totalPrice = $duration * $venue->price;
+
+        // User dummy (karena auth belum aktif)
+        $user = User::where('role', 'renter')->first();
+
+        // Buat booking
+        $booking = Booking::create([
+            'user_id' => $user->id ?? 1,
+            'venue_id' => $venue_id,
+            'booking_date' => $request->date,
+            'start_time' => $request->start_time,
+            'end_time' => $request->end_time,
+            'total_price' => $totalPrice,
+            'status' => 'pending',
+        ]);
+
+        return redirect()->route('renter.bookings.show', $booking->booking_code)
+                         ->with('success', 'Berhasil mengamankan jadwal!');
+    }
+
+    public function show($booking_code)
+    {
+        $booking = Booking::with(['venue.mainImage', 'payment'])->where('booking_code', $booking_code)->firstOrFail();
 
         $statusMap = [
             'pending' => 'Pending',

@@ -54,7 +54,7 @@
     <div class="flex flex-col gap-4">
         @forelse($bookings as $booking)
         <!-- Booking Card -->
-        <a href="{{ route('renter.bookings.show', $booking->id) }}" class="block bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/30 overflow-hidden hover:shadow-md transition-shadow group flex flex-col md:flex-row {{ $booking->status == 'Cancelled' ? 'opacity-75' : '' }}">
+        <a href="{{ route('renter.bookings.show', $booking->booking_code) }}" class="block bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/30 overflow-hidden hover:shadow-md transition-shadow group flex flex-col md:flex-row {{ $booking->status == 'Cancelled' ? 'opacity-75' : '' }}">
             
             <div class="p-6 md:p-8 flex flex-col md:flex-row flex-grow items-start md:items-center justify-between gap-6">
                 <!-- Left Section: Icon & Info -->

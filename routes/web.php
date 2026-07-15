@@ -25,10 +25,11 @@ Route::name('renter.')->group(function () {
     Route::get('/venues', [RenterVenueController::class, 'index'])->name('venues.index');
     Route::get('/venues/{slug}', [RenterVenueController::class, 'show'])->name('venues.show');
     Route::get('/venues/{id}/availability', [RenterVenueController::class, 'availability'])->name('venues.availability');
+    Route::post('/venues/{venue}/book', [RenterBookingController::class, 'store'])->name('venues.book');
 
     // Riwayat Booking & Detail
     Route::get('/bookings', [RenterBookingController::class, 'index'])->name('bookings.index');
-    Route::get('/bookings/{id}', [RenterBookingController::class, 'show'])->name('bookings.show');
+    Route::get('/bookings/{booking_code}', [RenterBookingController::class, 'show'])->name('bookings.show');
 });
 
 // ==========================================

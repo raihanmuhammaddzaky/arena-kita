@@ -9,7 +9,8 @@
     
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         @foreach($upcomingBookings as $booking)
-        <div class="bg-surface-container-low border border-outline-variant/30 rounded-2xl p-6 flex items-center justify-between hover:bg-surface-container-lowest hover:shadow-md transition-all group cursor-pointer">
+        <div class="bg-surface-container-low border border-outline-variant/30 rounded-2xl p-6 flex items-center justify-between hover:bg-surface-container-lowest hover:shadow-md transition-all group cursor-pointer relative">
+            <a href="{{ route('renter.bookings.show', $booking->booking_code) }}" class="absolute inset-0 z-10"><span class="sr-only">Detail Pesanan</span></a>
             <div class="flex items-center gap-5">
                 <div class="w-16 h-16 rounded-2xl bg-primary-fixed flex flex-col items-center justify-center text-on-primary-fixed shadow-sm border border-primary-fixed-dim/30">
                     <span class="material-symbols-outlined text-[28px]">sports_tennis</span>
@@ -22,9 +23,6 @@
                     </div>
                 </div>
             </div>
-            <a href="{{ route('renter.bookings.show', $booking->id) }}" class="w-10 h-10 rounded-full border border-outline-variant/50 flex items-center justify-center text-on-surface-variant group-hover:bg-primary group-hover:border-primary group-hover:text-on-primary transition-colors shrink-0">
-                <span class="material-symbols-outlined">arrow_forward</span>
-            </a>
         </div>
         @endforeach
     </div>
@@ -38,7 +36,8 @@
     
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         @foreach($recentBookings as $booking)
-        <div class="bg-surface-container-low border border-outline-variant/30 rounded-2xl p-6 flex items-center justify-between hover:bg-surface-container-lowest hover:shadow-md transition-all group cursor-pointer opacity-80 hover:opacity-100">
+        <div class="bg-surface-container-low border border-outline-variant/30 rounded-2xl p-6 flex items-center justify-between hover:bg-surface-container-lowest hover:shadow-md transition-all group cursor-pointer opacity-80 hover:opacity-100 relative">
+            <a href="{{ route('renter.bookings.show', $booking->booking_code) }}" class="absolute inset-0 z-10"><span class="sr-only">Detail Aktivitas</span></a>
             <div class="flex items-center gap-5">
                 <div class="w-16 h-16 rounded-2xl bg-surface-container-highest flex flex-col items-center justify-center text-on-surface-variant shadow-sm border border-outline-variant/30">
                     <span class="material-symbols-outlined text-[28px]">history</span>
@@ -50,9 +49,6 @@
                     </div>
                 </div>
             </div>
-            <a href="{{ route('renter.bookings.show', $booking->id) }}" class="w-10 h-10 rounded-full border border-outline-variant/50 flex items-center justify-center text-on-surface-variant group-hover:bg-surface-variant group-hover:text-on-surface-variant transition-colors shrink-0">
-                <span class="material-symbols-outlined">arrow_forward</span>
-            </a>
         </div>
         @endforeach
     </div>

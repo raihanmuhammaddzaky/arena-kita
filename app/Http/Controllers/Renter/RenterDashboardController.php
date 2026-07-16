@@ -61,6 +61,7 @@ class RenterDashboardController extends Controller
         $upcomingBookings = $upcomingBookingsRaw->map(function ($booking) {
             return (object) [
                 'id' => $booking->id,
+                'booking_code' => $booking->booking_code,
                 'venue_name' => $booking->venue->name,
                 'date' => Carbon::parse($booking->booking_date)->translatedFormat('d F Y'),
                 'time' => Carbon::parse($booking->start_time)->format('H:i') . ' - ' . Carbon::parse($booking->end_time)->format('H:i') . ' WIB',
@@ -91,6 +92,7 @@ class RenterDashboardController extends Controller
 
             return (object) [
                 'id' => $booking->id,
+                'booking_code' => $booking->booking_code,
                 'venue_name' => $booking->venue->name,
                 'date' => Carbon::parse($booking->booking_date)->translatedFormat('d F Y'),
                 'time' => Carbon::parse($booking->start_time)->format('H:i') . ' - ' . Carbon::parse($booking->end_time)->format('H:i') . ' WIB',

@@ -3,8 +3,8 @@
 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-stack-lg">
     <div class="md:col-span-3 rounded-2xl overflow-hidden h-[300px] md:h-[450px] relative group">
         @php
-            $mainImage = $venue->images->where('is_main', true)->first() ?? $venue->images->first();
-            $mainImagePath = $mainImage ? $mainImage->image_path : 'https://placehold.co/1200x600?text=No+Image';
+            $mainImage = isset($venue->images) ? ($venue->images->where('is_main', true)->first() ?? $venue->images->first()) : null;
+            $mainImagePath = $mainImage ? $mainImage->image_path : ($venue->image ?? 'https://placehold.co/1200x600?text=No+Image');
         @endphp
         <img id="main-image" src="{{ $mainImagePath }}" alt="{{ $venue->name }}" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
         <!-- Navigation Arrows -->
@@ -16,13 +16,14 @@
         </button>
     </div>
     <div class="flex flex-row md:flex-col gap-4 overflow-x-auto md:overflow-visible pb-2 md:pb-0 hide-scrollbar" id="thumbnail-container">
-        @forelse($venue->images->take(4) as $index => $image)
-            @if($index == 3 && $venue->images->count() > 4)
+        @php $venueImages = isset($venue->images) ? $venue->images : collect([]); @endphp
+        @forelse($venueImages->take(4) as $index => $image)
+            @if($index == 3 && $venueImages->count() > 4)
                 <!-- Thumbnail 4 (More) -->
                 <div class="w-24 md:w-full h-24 md:h-[101px] shrink-0 rounded-xl overflow-hidden cursor-pointer relative">
                     <img src="{{ $image->image_path }}" alt="Thumbnail" class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-primary/70 flex items-center justify-center">
-                        <span class="font-headline-md text-on-primary">+{{ $venue->images->count() - 3 }}</span>
+                        <span class="font-headline-md text-on-primary">+{{ $venueImages->count() - 3 }}</span>
                     </div>
                 </div>
             @else

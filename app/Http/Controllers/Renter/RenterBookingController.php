@@ -220,4 +220,35 @@ class RenterBookingController extends Controller
 
         return redirect()->back()->with('success', 'Bukti pembayaran berhasil diunggah. Mohon tunggu konfirmasi dari Admin.');
     }
+
+    public function invoice($booking_code)
+    {
+        $booking = Booking::with('venue', 'user')->where('booking_code', $booking_code)->firstOrFail();
+
+        // Cek apakah booking sudah dikonfirmasi (atau completed)
+        if (!in_array($booking->status, ['confirmed', 'completed'])) {
+            return redirect()->route('renter.bookings.show', $booking_code)->with('error', 'Tiket belum tersedia karena pembayaran belum dikonfirmasi.');
+        }
+
+        $duration = Carbon::parse($booking->start_time)->diffInHours(Carbon::parse($booking->end_time));
+        $pricePerHour = $booking->venue->price;
+        $subtotal = $pricePerHour * $duration;
+        $adminFee = 5000;
+        $tax = (int) round($subtotal * 0.11);
+
+        $bookingData = (object) [
+            'booking_code' => $booking->booking_code,
+            'renter_name' => $booking->user->name ?? 'Penyewa',
+            'venue_name' => $booking->venue->name,
+            'venue_address' => $booking->venue->address,
+            'date' => Carbon::parse($booking->booking_date)->translatedFormat('d F Y'),
+            'time' => Carbon::parse($booking->start_time)->format('H:i') . ' - ' . Carbon::parse($booking->end_time)->format('H:i') . ' WIB',
+            'duration' => $duration,
+            'total_price' => $subtotal + $adminFee + $tax,
+            'status' => 'LUNAS (PAID)',
+            'created_at' => Carbon::parse($booking->created_at)->translatedFormat('d F Y H:i WIB'),
+        ];
+
+        return view('renter.bookings.invoice', compact('bookingData'));
+    }
 }

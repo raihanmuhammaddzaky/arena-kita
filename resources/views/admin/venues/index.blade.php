@@ -74,7 +74,7 @@
                         <h3 class="font-headline-md text-[18px] text-primary mb-1 truncate">{{ $venue->name }}</h3>
                         <p class="text-sm text-on-surface-variant mb-3 truncate">{{ $venue->address }}</p>
                         <div class="flex items-center justify-between mb-4">
-                            <span class="text-secondary font-label-md text-label-md">Rp {{ number_format($venue->price, 0, ',', '.') }} <span class="text-on-surface-variant font-normal text-xs">/ {{ $venue->time_unit_minutes }} menit</span></span>
+                            <span class="text-secondary font-label-md text-label-md">Rp {{ number_format($venue->price, 0, ',', '.') }} <span class="text-on-surface-variant font-normal text-xs">/ Jam</span></span>
                             <span class="text-xs text-on-surface-variant flex items-center gap-1">
                                 <span class="material-symbols-outlined text-[16px]">group</span>
                                 Max {{ $venue->max_capacity }}

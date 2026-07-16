@@ -92,7 +92,7 @@
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
-                                <label for="price" class="block font-label-md text-label-md text-on-surface-variant mb-1">Harga per Sesi (Rp)</label>
+                                <label for="price" class="block font-label-md text-label-md text-on-surface-variant mb-1">Harga per Jam (Rp)</label>
                                 <div class="relative">
                                     <span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant font-body-md">Rp</span>
                                     <input id="price" name="price" value="{{ old('price', $venue->price) }}" class="w-full bg-surface-container-low border-0 text-on-surface rounded-lg pl-12 pr-4 py-3 focus:ring-2 focus:ring-secondary focus:bg-surface-container-lowest transition-all" type="number" min="0" required>
@@ -105,14 +105,8 @@
                                     <span class="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant font-body-md">Orang</span>
                                 </div>
                             </div>
-                            <div class="md:col-span-2">
-                                <label for="time_unit_minutes" class="block font-label-md text-label-md text-on-surface-variant mb-1">Durasi Sewa Standar (Menit)</label>
-                                <select id="time_unit_minutes" name="time_unit_minutes" class="w-full bg-surface-container-low border-0 text-on-surface rounded-lg px-4 py-3 focus:ring-2 focus:ring-secondary focus:bg-surface-container-lowest transition-all appearance-none cursor-pointer">
-                                    <option value="60" {{ old('time_unit_minutes', $venue->time_unit_minutes) == 60 ? 'selected' : '' }}>60 Menit (1 Jam)</option>
-                                    <option value="90" {{ old('time_unit_minutes', $venue->time_unit_minutes) == 90 ? 'selected' : '' }}>90 Menit (1.5 Jam)</option>
-                                    <option value="120" {{ old('time_unit_minutes', $venue->time_unit_minutes) == 120 ? 'selected' : '' }}>120 Menit (2 Jam)</option>
-                                </select>
-                            </div>
+                            <!-- Hidden input for standard 1 hour duration -->
+                            <input type="hidden" name="time_unit_minutes" value="60">
                         </div>
                     </div>
                 </div>

@@ -77,18 +77,14 @@
                 <!-- Card: Harga & Kapasitas -->
                 <div class="bg-surface-container-lowest rounded-xl shadow-md p-6 flex flex-col gap-4">
                     <h3 class="font-headline-md text-[20px] leading-[28px] text-primary">Harga & Kapasitas</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="flex flex-col gap-1">
-                            <span class="font-label-md text-label-md text-on-surface-variant">Harga per Sesi</span>
+                            <span class="font-label-md text-label-md text-on-surface-variant">Harga per Jam</span>
                             <span class="text-on-surface font-medium text-lg">Rp {{ number_format($venue->price, 0, ',', '.') }}</span>
                         </div>
                         <div class="flex flex-col gap-1">
                             <span class="font-label-md text-label-md text-on-surface-variant">Kapasitas Maksimal</span>
                             <span class="text-on-surface font-medium">{{ $venue->max_capacity }} Orang</span>
-                        </div>
-                        <div class="flex flex-col gap-1">
-                            <span class="font-label-md text-label-md text-on-surface-variant">Durasi Sewa</span>
-                            <span class="text-on-surface font-medium">{{ $venue->time_unit_minutes }} Menit</span>
                         </div>
                     </div>
                 </div>

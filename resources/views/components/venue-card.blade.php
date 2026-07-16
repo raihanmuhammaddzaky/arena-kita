@@ -16,10 +16,6 @@
                 <x-ui.icon name="image" class="text-[48px]" />
             </div>
         @endif
-        
-        <div class="absolute top-3 left-3 flex gap-2">
-            <x-ui.badge variant="success" icon="check_circle">Tersedia</x-ui.badge>
-        </div>
     </div>
     
     <!-- Content Section -->

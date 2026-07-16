@@ -31,10 +31,30 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
-    Route::get('/pending', function () {
-        return view('auth.pending');
-    })->name('pending');
 });
+
+// Halaman pending: hanya bisa diakses oleh user yang sudah login & berstatus pending
+Route::get('/pending', function () {
+    // Jika belum login, arahkan ke login
+    if (!auth()->check()) {
+        return redirect()->route('login');
+    }
+    // Jika sudah di-approve, arahkan ke dashboard sesuai role
+    if (auth()->user()->status === 'approved') {
+        if (auth()->user()->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+        return redirect()->route('renter.dashboard');
+    }
+    // Jika ditolak, logout dan arahkan ke login dengan pesan error
+    if (auth()->user()->status === 'rejected') {
+        auth()->logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        return redirect()->route('login')->withErrors(['email' => 'Maaf, pendaftaran akun Anda telah ditolak oleh Admin.']);
+    }
+    return view('auth.pending');
+})->name('pending')->middleware('auth');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 

@@ -122,12 +122,9 @@ class RenterBookingController extends Controller
         $duration = Carbon::parse($request->start_time)->diffInHours(Carbon::parse($request->end_time));
         $totalPrice = $duration * $venue->price;
 
-        // User dummy (karena auth belum aktif)
-        $user = User::where('role', 'renter')->first();
-
         // Buat booking
         $booking = Booking::create([
-            'user_id' => $user->id ?? 1,
+            'user_id' => auth()->id(),
             'venue_id' => $venue_id,
             'booking_date' => $request->date,
             'start_time' => $request->start_time,
@@ -178,7 +175,7 @@ class RenterBookingController extends Controller
             'total_price' => $subtotal + $adminFee + $tax,
             'status' => $statusMap[$booking->status] ?? ucfirst($booking->status),
             'deadline' => Carbon::parse($booking->created_at)->addMinutes(5)->format('H:i') . ' WIB Hari ini',
-            'venue_image' => $booking->venue->mainImage ? $booking->venue->mainImage->image_path : 'https://placehold.co/600x400?text=No+Image',
+            'venue_image' => $booking->venue->mainImage ? $booking->venue->mainImage->image_url : 'https://placehold.co/600x400?text=No+Image',
         ];
 
         return view('renter.bookings.show', compact('booking'))->with('booking', $bookingData);

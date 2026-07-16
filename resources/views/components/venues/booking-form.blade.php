@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <form action="{{ route('renter.venues.book', $venue->id) }}" method="POST" class="flex flex-col gap-4">
+        <form id="booking-form" action="{{ route('renter.venues.book', $venue->slug) }}" method="POST" class="flex flex-col gap-4">
             @csrf
             <div>
                 <label class="font-label-md text-on-surface mb-2 block">Pilih Tanggal</label>
@@ -35,8 +35,8 @@
                     <!-- Slots will be rendered here by JS -->
                     <p class="col-span-full text-center text-on-surface-variant font-body-md text-sm py-4">Silakan pilih tanggal terlebih dahulu.</p>
                 </div>
-                <input type="hidden" name="start_time" id="start_time" required>
-                <input type="hidden" name="end_time" id="end_time" required>
+                <input type="hidden" name="start_time" id="start_time">
+                <input type="hidden" name="end_time" id="end_time">
                 <p id="selection-error" class="text-error font-body-md text-[12px] mt-2 hidden">Pilih minimal 1 slot waktu.</p>
                 @error('start_time')
                     <p class="text-error font-body-md text-[12px] mt-1">{{ $message }}</p>
@@ -226,7 +226,7 @@
         if(dateInput.value) fetchAvailability(dateInput.value);
 
         // Form Submission Validation
-        const form = document.querySelector('form');
+        const form = document.getElementById('booking-form');
         const customAlert = document.getElementById('custom-alert');
         
         form.addEventListener('submit', function(e) {

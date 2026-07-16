@@ -143,10 +143,13 @@
             <!-- Actions -->
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 
-                <a href="{{ route('login') }}" class="bg-surface-container-lowest text-primary border border-outline-variant rounded-xl px-8 h-[48px] font-label-sm text-label-sm hover:bg-surface transition-colors flex items-center justify-center gap-2 w-full sm:w-auto">
-                    <span class="material-symbols-outlined text-[18px]">logout</span>
-                    Keluar
-                </a>
+                <form method="POST" action="{{ route('logout') }}" class="w-full sm:w-auto">
+                    @csrf
+                    <button type="submit" class="bg-surface-container-lowest text-primary border border-outline-variant rounded-xl px-8 h-[48px] font-label-sm text-label-sm hover:bg-surface transition-colors flex items-center justify-center gap-2 w-full sm:w-auto">
+                        <span class="material-symbols-outlined text-[18px]">logout</span>
+                        Keluar
+                    </button>
+                </form>
             </div>
         </div>
 

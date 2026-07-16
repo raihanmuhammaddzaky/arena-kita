@@ -24,21 +24,19 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        // Cari user dulu untuk cek status
+        // Cari user dulu untuk cek apakah ada
         $user = User::where('email', $credentials['email'])->first();
 
         if (!$user) {
             return back()->withErrors(['email' => 'Email tidak ditemukan.'])->withInput();
         }
 
-        if ($user->status === 'pending') {
-            return redirect()->route('pending');
-        }
-
+        // Cek apakah akun ditolak sebelum login
         if ($user->status === 'rejected') {
             return back()->withErrors(['email' => 'Akun Anda telah ditolak oleh Admin.'])->withInput();
         }
 
+        // Coba authenticate (termasuk user pending)
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             return $this->redirectByRole(Auth::user());
@@ -64,7 +62,7 @@ class AuthController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        User::create([
+        $user = User::create([
             'name'     => $validated['name'],
             'email'    => $validated['email'],
             'phone'    => $validated['phone'],
@@ -72,6 +70,9 @@ class AuthController extends Controller
             'role'     => 'renter',
             'status'   => 'pending',
         ]);
+
+        // Login user langsung setelah register
+        Auth::login($user);
 
         return redirect()->route('pending');
     }
@@ -87,9 +88,15 @@ class AuthController extends Controller
 
     private function redirectByRole($user)
     {
+        // Jika status masih pending, arahkan ke halaman pending
+        if ($user->status === 'pending') {
+            return redirect()->route('pending');
+        }
+
         if ($user->role === 'admin') {
             return redirect()->route('admin.dashboard');
         }
+
         return redirect()->route('renter.dashboard');
     }
 }

@@ -87,9 +87,9 @@ class AdminVenueController extends Controller
             ]);
         }
 
-        // Upload gallery images (max 3)
+        // Upload gallery images (max 4)
         if ($request->hasFile('gallery_images')) {
-            $galleryFiles = array_slice($request->file('gallery_images'), 0, 3);
+            $galleryFiles = array_slice($request->file('gallery_images'), 0, 4);
             foreach ($galleryFiles as $file) {
                 $path = $file->store('venues', 'public');
                 VenueImage::create([
@@ -188,7 +188,7 @@ class AdminVenueController extends Controller
         // Tambah gallery images baru
         if ($request->hasFile('gallery_images')) {
             $currentGalleryCount = $venue->images()->where('is_main', false)->count();
-            $maxNew = 3 - $currentGalleryCount;
+            $maxNew = 4 - $currentGalleryCount;
             if ($maxNew > 0) {
                 $galleryFiles = array_slice($request->file('gallery_images'), 0, $maxNew);
                 foreach ($galleryFiles as $file) {

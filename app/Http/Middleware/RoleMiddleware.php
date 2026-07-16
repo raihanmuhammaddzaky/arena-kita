@@ -14,6 +14,11 @@ class RoleMiddleware
             abort(403, 'Unauthorized access.');
         }
 
+        // Jika user masih pending, redirect ke halaman pending
+        if (auth()->user()->status === 'pending') {
+            return redirect()->route('pending');
+        }
+
         return $next($request);
     }
 }

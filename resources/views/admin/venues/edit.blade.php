@@ -129,31 +129,38 @@
                             <input type="file" name="main_image" id="main_image" accept="image/jpeg,image/png,image/webp" class="w-full text-sm text-on-surface-variant file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-secondary-container file:text-on-secondary-container hover:file:bg-secondary-container/80 cursor-pointer">
                         </div>
 
-                        <!-- Current Gallery -->
-                        <div>
-                            <label class="block font-label-md text-label-md text-on-surface-variant mb-2">Galeri Saat Ini</label>
-                            @php $galleryImages = $venue->images->where('is_main', false); @endphp
-                            @if($galleryImages->count() > 0)
-                                <div class="grid grid-cols-3 gap-2 mb-3">
-                                    @foreach($galleryImages as $img)
-                                        <div class="aspect-square rounded-md overflow-hidden relative group">
-                                            <img src="{{ $img->image_url }}" class="w-full h-full object-cover">
-                                            <label class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
-                                                <input type="checkbox" name="delete_images[]" value="{{ $img->id }}" class="sr-only peer">
-                                                <span class="material-symbols-outlined text-white peer-checked:text-error">delete</span>
-                                            </label>
+                        <!-- Gallery -->
+                        <div class="space-y-6">
+                            <label class="block font-label-md text-label-md text-on-surface-variant mb-2">Galeri Lapangan (Opsional)</label>
+                            @php 
+                                $galleryImages = $venue->images->where('is_main', false)->values(); 
+                            @endphp
+                            
+                            @for($i = 0; $i < 4; $i++)
+                                @php $img = $galleryImages->get($i); @endphp
+                                <div class="bg-surface-container rounded-lg p-4 border border-outline-variant/30">
+                                    <label class="block text-sm text-on-surface-variant font-semibold mb-3">Foto Tambahan {{ $i + 1 }}</label>
+                                    
+                                    @if($img)
+                                        <div class="flex items-start gap-4 mb-3">
+                                            <div class="w-24 aspect-square rounded-md overflow-hidden bg-surface-container-low border border-outline-variant/50">
+                                                <img src="{{ $img->image_url }}" class="w-full h-full object-cover">
+                                            </div>
+                                            <div>
+                                                <label class="flex items-center gap-2 text-sm text-error cursor-pointer hover:bg-error-container/50 px-3 py-2 rounded-md transition-colors">
+                                                    <input type="checkbox" name="delete_images[]" value="{{ $img->id }}" class="rounded text-error focus:ring-error">
+                                                    <span class="material-symbols-outlined text-[18px]">delete</span>
+                                                    Hapus Foto Ini
+                                                </label>
+                                                <p class="text-xs text-on-surface-variant mt-2 max-w-[200px]">Centang untuk menghapus foto ini saat menyimpan.</p>
+                                            </div>
                                         </div>
-                                    @endforeach
+                                    @endif
+                                    
+                                    <label class="block text-xs text-on-surface-variant mb-1">{{ $img ? 'Ganti dengan foto baru (opsional):' : 'Upload foto baru:' }}</label>
+                                    <input type="file" name="gallery_images[]" accept="image/jpeg,image/png,image/webp" class="w-full text-sm text-on-surface-variant file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-surface-container-high file:text-on-surface hover:file:bg-surface-variant cursor-pointer">
                                 </div>
-                                <p class="text-xs text-on-surface-variant mb-3">Hover dan klik untuk menandai gambar yang ingin dihapus.</p>
-                            @else
-                                <p class="text-sm text-on-surface-variant mb-3">Belum ada foto galeri.</p>
-                            @endif
-
-                            @if($galleryImages->count() < 3)
-                                <label class="block text-sm text-on-surface-variant mb-1">Tambah Foto Galeri (max {{ 3 - $galleryImages->count() }} lagi)</label>
-                                <input type="file" name="gallery_images[]" accept="image/jpeg,image/png,image/webp" multiple class="w-full text-sm text-on-surface-variant file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-surface-container-high file:text-on-surface hover:file:bg-surface-variant cursor-pointer">
-                            @endif
+                            @endfor
                         </div>
                     </div>
                 </div>

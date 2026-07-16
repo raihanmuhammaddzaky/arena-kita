@@ -32,7 +32,7 @@ class AuthController extends Controller
         }
 
         if ($user->status === 'pending') {
-            return back()->withErrors(['email' => 'Akun Anda masih menunggu persetujuan Admin.'])->withInput();
+            return redirect()->route('pending');
         }
 
         if ($user->status === 'rejected') {
@@ -73,8 +73,7 @@ class AuthController extends Controller
             'status'   => 'pending',
         ]);
 
-        return redirect()->route('login')
-            ->with('success', 'Registrasi berhasil! Silakan tunggu persetujuan Admin sebelum login.');
+        return redirect()->route('pending');
     }
 
     public function logout(Request $request)

@@ -32,6 +32,14 @@
                 <li>
                     <a class="font-label-md text-label-md {{ request()->routeIs('renter.bookings.*') ? 'text-primary font-bold border-b-2 border-primary pb-1' : 'text-on-surface-variant hover:text-primary transition-colors duration-300' }}" href="{{ route('renter.bookings.index') }}">Riwayat Pemesanan</a>
                 </li>
+                <li>
+                    <form method="POST" action="{{ route('logout') }}" class="inline">
+                        @csrf
+                        <button type="submit" class="font-label-md text-label-md text-error hover:text-error/80 transition-colors duration-300 ml-4 font-bold border-b-2 border-transparent hover:border-error pb-1">
+                            Logout
+                        </button>
+                    </form>
+                </li>
             </ul>
         </div>
     </nav>

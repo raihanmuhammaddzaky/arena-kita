@@ -28,14 +28,5 @@ class UserSeeder extends Seeder
             'role' => 'renter',
             'status' => 'approved',
         ]);
-        
-        User::create([
-            'name' => 'Jane Doe (Pending)',
-            'email' => 'pending@example.com',
-            'password' => Hash::make('password'),
-            'phone' => '081298765433',
-            'role' => 'renter',
-            'status' => 'pending',
-        ]);
     }
 }

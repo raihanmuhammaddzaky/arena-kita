@@ -17,7 +17,6 @@ class Venue extends Model
         'price',
         'time_unit_minutes',
         'max_capacity',
-        'is_active',
     ];
 
     /**
@@ -31,7 +30,6 @@ class Venue extends Model
     }
 
     protected $casts = [
-        'is_active' => 'boolean',
     ];
 
     public function images()

@@ -92,8 +92,10 @@ class RenterBookingController extends Controller
         return view('renter.bookings.index', compact('bookings'));
     }
 
-    public function store(Request $request, $venue_id)
+    public function store(Request $request, \App\Models\Venue $venue)
     {
+        $venue_id = $venue->id;
+        
         $request->validate([
             'date' => 'required|date',
             'start_time' => 'required|date_format:H:i',
@@ -102,7 +104,7 @@ class RenterBookingController extends Controller
 
         // Cek overlap booking
         $isBooked = Booking::where('venue_id', $venue_id)
-            ->where('booking_date', $request->date)
+            ->whereDate('booking_date', $request->date)
             ->whereIn('status', ['pending', 'confirmed'])
             ->where(function ($query) use ($request) {
                 $query->where(function ($q) use ($request) {

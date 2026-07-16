@@ -69,13 +69,7 @@
                                 <label for="address" class="block font-label-md text-label-md text-on-surface-variant mb-1">Alamat</label>
                                 <input id="address" name="address" value="{{ old('address', $venue->address) }}" class="w-full bg-surface-container-low border-0 text-on-surface rounded-lg px-4 py-3 focus:ring-2 focus:ring-secondary focus:bg-surface-container-lowest transition-all" type="text" required>
                             </div>
-                            <div>
-                                <label for="is_active" class="block font-label-md text-label-md text-on-surface-variant mb-1">Status Lapangan</label>
-                                <select id="is_active" name="is_active" class="w-full bg-surface-container-low border-0 text-on-surface rounded-lg px-4 py-3 focus:ring-2 focus:ring-secondary focus:bg-surface-container-lowest transition-all appearance-none cursor-pointer">
-                                    <option value="1" {{ old('is_active', $venue->is_active) == true ? 'selected' : '' }}>Aktif</option>
-                                    <option value="0" {{ old('is_active', $venue->is_active) == false ? 'selected' : '' }}>Nonaktif</option>
-                                </select>
-                            </div>
+
                             <div>
                                 <label for="description" class="block font-label-md text-label-md text-on-surface-variant mb-1">Deskripsi</label>
                                 <textarea id="description" name="description" class="w-full bg-surface-container-low border-0 text-on-surface rounded-lg px-4 py-3 focus:ring-2 focus:ring-secondary focus:bg-surface-container-lowest transition-all" rows="4">{{ old('description', $venue->description) }}</textarea>
@@ -124,7 +118,7 @@
                             <label class="block font-label-md text-label-md text-on-surface-variant mb-2">Foto Utama Saat Ini</label>
                             @if($venue->mainImage)
                                 <div class="aspect-video rounded-lg overflow-hidden mb-2 bg-surface-container">
-                                    <img src="{{ asset('storage/' . $venue->mainImage->image_path) }}" alt="{{ $venue->name }}" class="w-full h-full object-cover">
+                                    <img src="{{ $venue->mainImage->image_url }}" alt="{{ $venue->name }}" class="w-full h-full object-cover">
                                 </div>
                             @else
                                 <div class="aspect-video rounded-lg bg-surface-container-low flex items-center justify-center mb-2">
@@ -143,7 +137,7 @@
                                 <div class="grid grid-cols-3 gap-2 mb-3">
                                     @foreach($galleryImages as $img)
                                         <div class="aspect-square rounded-md overflow-hidden relative group">
-                                            <img src="{{ asset('storage/' . $img->image_path) }}" class="w-full h-full object-cover">
+                                            <img src="{{ $img->image_url }}" class="w-full h-full object-cover">
                                             <label class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
                                                 <input type="checkbox" name="delete_images[]" value="{{ $img->id }}" class="sr-only peer">
                                                 <span class="material-symbols-outlined text-white peer-checked:text-error">delete</span>

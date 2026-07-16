@@ -20,7 +20,6 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('time_unit_minutes');
             $table->integer('max_capacity');
-            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

@@ -61,13 +61,7 @@
                                 <label for="address" class="block font-label-md text-label-md text-on-surface-variant mb-1">Alamat</label>
                                 <input id="address" name="address" value="{{ old('address') }}" class="w-full bg-surface-container-low border-0 text-on-surface rounded-lg px-4 py-3 focus:ring-2 focus:ring-secondary focus:bg-surface-container-lowest transition-all" placeholder="Alamat lengkap lapangan" type="text" required>
                             </div>
-                            <div>
-                                <label for="is_active" class="block font-label-md text-label-md text-on-surface-variant mb-1">Status Lapangan</label>
-                                <select id="is_active" name="is_active" class="w-full bg-surface-container-low border-0 text-on-surface rounded-lg px-4 py-3 focus:ring-2 focus:ring-secondary focus:bg-surface-container-lowest transition-all appearance-none cursor-pointer">
-                                    <option value="1" {{ old('is_active', '1') == '1' ? 'selected' : '' }}>Aktif</option>
-                                    <option value="0" {{ old('is_active') == '0' ? 'selected' : '' }}>Nonaktif</option>
-                                </select>
-                            </div>
+
                             <div>
                                 <label for="description" class="block font-label-md text-label-md text-on-surface-variant mb-1">Deskripsi</label>
                                 <textarea id="description" name="description" class="w-full bg-surface-container-low border-0 text-on-surface rounded-lg px-4 py-3 focus:ring-2 focus:ring-secondary focus:bg-surface-container-lowest transition-all" placeholder="Jelaskan fasilitas dan fitur lapangan..." rows="4">{{ old('description') }}</textarea>

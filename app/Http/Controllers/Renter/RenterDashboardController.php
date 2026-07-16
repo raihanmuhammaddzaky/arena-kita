@@ -43,7 +43,7 @@ class RenterDashboardController extends Controller
         // =============================================
         // 3. REKOMENDASI LAPANGAN
         // =============================================
-        $featuredVenues = Venue::with('mainImage')->where('is_active', true)->inRandomOrder()->take(3)->get();
+        $featuredVenues = Venue::with('mainImage')->inRandomOrder()->take(3)->get();
 
         // =============================================
         // 4. JADWAL TERDEKAT (hanya status 'confirmed')

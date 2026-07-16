@@ -12,7 +12,7 @@ class RenterVenueController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Venue::with('mainImage')->where('is_active', true);
+        $query = Venue::with('mainImage');
         
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;

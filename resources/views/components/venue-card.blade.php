@@ -5,7 +5,7 @@
         @php
             $imageUrl = null;
             if (isset($venue->mainImage) && $venue->mainImage) {
-                $imageUrl = $venue->mainImage->image_path;
+                $imageUrl = $venue->mainImage->image_url;
             } elseif (isset($venue->image) && $venue->image) {
                 $imageUrl = $venue->image;
             }

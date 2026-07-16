@@ -4,7 +4,7 @@
     <div class="md:col-span-3 rounded-2xl overflow-hidden h-[300px] md:h-[450px] relative group">
         @php
             $mainImage = isset($venue->images) ? ($venue->images->where('is_main', true)->first() ?? $venue->images->first()) : null;
-            $mainImagePath = $mainImage ? $mainImage->image_path : ($venue->image ?? 'https://placehold.co/1200x600?text=No+Image');
+            $mainImagePath = $mainImage ? $mainImage->image_url : ($venue->image ?? 'https://placehold.co/1200x600?text=No+Image');
         @endphp
         <img id="main-image" src="{{ $mainImagePath }}" alt="{{ $venue->name }}" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
         <!-- Navigation Arrows -->
@@ -21,15 +21,15 @@
             @if($index == 3 && $venueImages->count() > 4)
                 <!-- Thumbnail 4 (More) -->
                 <div class="w-24 md:w-full h-24 md:h-[101px] shrink-0 rounded-xl overflow-hidden cursor-pointer relative">
-                    <img src="{{ $image->image_path }}" alt="Thumbnail" class="w-full h-full object-cover">
+                    <img src="{{ $image->image_url }}" alt="Thumbnail" class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-primary/70 flex items-center justify-center">
                         <span class="font-headline-md text-on-primary">+{{ $venueImages->count() - 3 }}</span>
                     </div>
                 </div>
             @else
                 <!-- Thumbnail {{ $index + 1 }} -->
-                <div onclick="document.getElementById('main-image').src='{{ $image->image_path }}'; Array.from(this.parentElement.children).forEach(c => { c.classList.remove('border-primary'); c.classList.add('border-transparent'); }); this.classList.remove('border-transparent'); this.classList.add('border-primary');" class="thumbnail-item w-24 md:w-full h-24 md:h-[101px] shrink-0 rounded-xl overflow-hidden cursor-pointer border-2 {{ $image->is_main ? 'border-primary' : 'border-transparent hover:border-primary/50' }} transition-colors">
-                    <img src="{{ $image->image_path }}" alt="Thumbnail" class="w-full h-full object-cover">
+                <div onclick="document.getElementById('main-image').src='{{ $image->image_url }}'; Array.from(this.parentElement.children).forEach(c => { c.classList.remove('border-primary'); c.classList.add('border-transparent'); }); this.classList.remove('border-transparent'); this.classList.add('border-primary');" class="thumbnail-item w-24 md:w-full h-24 md:h-[101px] shrink-0 rounded-xl overflow-hidden cursor-pointer border-2 {{ $image->is_main ? 'border-primary' : 'border-transparent hover:border-primary/50' }} transition-colors">
+                    <img src="{{ $image->image_url }}" alt="Thumbnail" class="w-full h-full object-cover">
                 </div>
             @endif
         @empty

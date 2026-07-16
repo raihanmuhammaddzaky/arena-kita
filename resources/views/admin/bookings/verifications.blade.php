@@ -31,70 +31,50 @@
             </div>
         @endif
 
-        <!-- Verification Queue Grid -->
-        <section class="grid grid-cols-1 xl:grid-cols-2 gap-stack-md">
-            @forelse($payments as $payment)
-                <div class="bg-surface-container-lowest rounded-xl shadow-md p-6 flex flex-col sm:flex-row gap-6 transition-all duration-200 hover:shadow-lg relative overflow-hidden group">
-                    <!-- Subtle accent bar -->
-                    <div class="absolute left-0 top-0 bottom-0 w-1 {{ $payment->status === 'verified' ? 'bg-secondary' : ($payment->status === 'rejected' ? 'bg-error' : 'bg-secondary-container') }} rounded-l-xl"></div>
-                    
-                    <!-- Thumbnail -->
-                    <div class="w-full sm:w-40 h-48 sm:h-auto bg-surface-container rounded-lg overflow-hidden shrink-0 relative cursor-pointer group-hover:ring-2 ring-secondary-container transition-all">
-                        <img class="w-full h-full object-cover" src="{{ asset('storage/' . $payment->proof_image) }}" alt="Bukti Pembayaran">
-                        <div class="absolute inset-0 bg-primary/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <span class="material-symbols-outlined text-on-primary" style="font-variation-settings: 'FILL' 1;">zoom_in</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Details & Actions -->
-                    <div class="flex-1 flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-start mb-2">
-                                <span class="bg-surface-container-high text-on-surface font-label-md text-label-md px-2 py-1 rounded font-mono text-sm">{{ $payment->booking->booking_code }}</span>
-                                <x-admin.badge 
-                                    :color="$payment->status === 'verified' ? 'success' : ($payment->status === 'rejected' ? 'error' : 'warning')" 
-                                    :text="ucfirst($payment->status)" 
-                                />
-                            </div>
-                            <h3 class="font-headline-md text-headline-md text-primary mb-1">Rp {{ number_format($payment->booking->total_price, 0, ',', '.') }}</h3>
-                            <p class="font-body-md text-body-md text-on-surface-variant mb-1">
-                                <strong class="text-on-surface">{{ $payment->booking->user->name ?? 'N/A' }}</strong> • {{ $payment->booking->venue->name ?? 'N/A' }}
-                            </p>
-                            <p class="text-sm text-on-surface-variant">
-                                {{ $payment->booking->booking_date->format('d M Y') }}, 
-                                {{ \Carbon\Carbon::parse($payment->booking->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($payment->booking->end_time)->format('H:i') }}
-                            </p>
-                            <p class="text-xs text-on-surface-variant mt-1">Uploaded {{ $payment->created_at->diffForHumans() }}</p>
-                        </div>
-                        
-                        @if($payment->status === 'pending')
-                            <div class="flex items-center gap-3 mt-4">
-                                <form action="{{ route('admin.payments.verify', $payment) }}" method="POST" class="flex-1">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button type="submit" class="w-full bg-secondary text-on-secondary font-label-md text-label-md py-3 px-4 rounded-xl shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2">
-                                        <span class="material-symbols-outlined">check_circle</span>
-                                        Verify Payment
-                                    </button>
-                                </form>
-                                <form action="{{ route('admin.payments.reject', $payment) }}" method="POST" class="flex-none" onsubmit="return confirm('Yakin ingin menolak pembayaran ini?');">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button type="submit" class="border border-outline text-error font-label-md text-label-md py-3 px-4 rounded-xl hover:bg-error-container hover:border-error-container hover:text-on-error-container transition-all flex items-center justify-center gap-2" title="Reject / Invalid">
-                                        <span class="material-symbols-outlined">cancel</span>
-                                    </button>
-                                </form>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            @empty
-                <div class="col-span-full py-12 text-center text-on-surface-variant">
-                    <span class="material-symbols-outlined text-5xl mb-4 block">payments</span>
-                    <p class="text-lg">Tidak ada pembayaran yang perlu diverifikasi.</p>
-                </div>
-            @endforelse
-        </section>
+        <div class="bg-surface rounded-2xl shadow-md overflow-hidden relative">
+            <div class="overflow-x-auto relative z-10">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-surface-container-highest bg-surface-container-low/50">
+                            <th class="py-4 px-6 font-label-md text-label-md text-on-surface-variant">Kode Booking</th>
+                            <th class="py-4 px-6 font-label-md text-label-md text-on-surface-variant">Penyewa</th>
+                            <th class="py-4 px-6 font-label-md text-label-md text-on-surface-variant">Lapangan</th>
+                            <th class="py-4 px-6 font-label-md text-label-md text-on-surface-variant">Total Bayar</th>
+                            <th class="py-4 px-6 font-label-md text-label-md text-on-surface-variant">Status</th>
+                            <th class="py-4 px-6 font-label-md text-label-md text-on-surface-variant text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-surface-container-highest">
+                        @forelse($payments as $payment)
+                            <tr class="hover:bg-surface-container-low transition-colors group cursor-pointer" onclick="window.location='{{ route('admin.payments.show', $payment) }}'">
+                                <td class="py-4 px-6 font-mono text-sm text-on-surface">{{ $payment->booking->booking_code }}</td>
+                                <td class="py-4 px-6 text-sm text-on-surface">{{ $payment->booking->user->name ?? 'N/A' }}</td>
+                                <td class="py-4 px-6 text-sm text-on-surface">{{ $payment->booking->venue->name ?? 'N/A' }}</td>
+                                <td class="py-4 px-6 text-sm font-medium text-primary">Rp {{ number_format($payment->booking->total_price, 0, ',', '.') }}</td>
+                                <td class="py-4 px-6">
+                                    <x-admin.badge 
+                                        :color="$payment->status === 'verified' ? 'success' : ($payment->status === 'rejected' ? 'error' : 'warning')" 
+                                        :text="ucfirst($payment->status)" 
+                                    />
+                                </td>
+                                <td class="py-4 px-6 text-right">
+                                    <a href="{{ route('admin.payments.show', $payment) }}" class="inline-flex items-center justify-center w-8 h-8 rounded-full hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors" title="Detail">
+                                        <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                    </a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="py-12 text-center text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-5xl mb-4 block">payments</span>
+                                    <p class="text-lg">Tidak ada data pembayaran.</p>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
         <!-- Pagination -->
         @if($payments->hasPages())

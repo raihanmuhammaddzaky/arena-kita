@@ -18,7 +18,7 @@ class VenueSeeder extends Seeder
             'price' => 150000,
             'time_unit_minutes' => 60,
             'max_capacity' => 10,
-            'is_active' => true,
+
         ]);
         $venue1->images()->createMany([
             ['image_path' => 'https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=1000&q=80', 'is_main' => true],
@@ -36,7 +36,7 @@ class VenueSeeder extends Seeder
             'price' => 200000,
             'time_unit_minutes' => 60,
             'max_capacity' => 4,
-            'is_active' => true,
+
         ]);
         $venue2->images()->createMany([
             ['image_path' => 'https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=1000&q=80', 'is_main' => true],
@@ -54,7 +54,7 @@ class VenueSeeder extends Seeder
             'price' => 85000,
             'time_unit_minutes' => 60,
             'max_capacity' => 4,
-            'is_active' => true,
+
         ]);
         $venue3->images()->createMany([
             ['image_path' => 'https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=1000&q=80', 'is_main' => true],
@@ -72,7 +72,6 @@ class VenueSeeder extends Seeder
             'price' => 300000,
             'time_unit_minutes' => 60,
             'max_capacity' => 4,
-            'is_active' => false,
         ]);
         $venue4->images()->createMany([
             ['image_path' => 'https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=1000&q=80', 'is_main' => true],

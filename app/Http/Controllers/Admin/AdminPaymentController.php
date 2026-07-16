@@ -22,6 +22,12 @@ class AdminPaymentController extends Controller
         return view('admin.bookings.verifications', compact('payments', 'statusFilter'));
     }
 
+    public function show(Payment $payment)
+    {
+        $payment->load(['booking.user', 'booking.venue']);
+        return view('admin.bookings.verifications_show', compact('payment'));
+    }
+
     public function verify(Payment $payment)
     {
         $payment->update(['status' => 'verified']);

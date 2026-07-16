@@ -19,4 +19,12 @@ class Payment extends Model
     {
         return $this->belongsTo(Booking::class);
     }
+
+    public function getProofImageUrlAttribute()
+    {
+        if (\Illuminate\Support\Str::startsWith($this->proof_image, ['http://', 'https://'])) {
+            return $this->proof_image;
+        }
+        return asset('storage/' . $this->proof_image);
+    }
 }

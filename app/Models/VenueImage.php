@@ -23,4 +23,12 @@ class VenueImage extends Model
     {
         return $this->belongsTo(Venue::class);
     }
+
+    public function getImageUrlAttribute()
+    {
+        if (\Illuminate\Support\Str::startsWith($this->image_path, ['http://', 'https://'])) {
+            return $this->image_path;
+        }
+        return asset('storage/' . $this->image_path);
+    }
 }

@@ -14,10 +14,6 @@
                 </div>
                 <div class="flex items-center gap-4">
                     <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary">{{ $venue->name }}</h2>
-                    <x-admin.badge 
-                        :color="$venue->is_active ? 'success' : 'error'" 
-                        :text="$venue->is_active ? 'Aktif' : 'Nonaktif'" 
-                    />
                 </div>
             </div>
             <div class="flex items-center gap-3">
@@ -35,6 +31,9 @@
             </div>
         @endif
 
+        <!-- Gallery Slider -->
+        <x-venues.detail-header :venue="$venue" />
+
         <!-- Tab Navigation -->
         <div class="border-b border-outline-variant">
             <nav class="-mb-px flex gap-8" aria-label="Tabs">
@@ -50,7 +49,7 @@
         <!-- Tab Content 1: Informasi Umum -->
         <div x-show="tab === 'informasi'" class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
             <!-- Left Column: Details -->
-            <div class="lg:col-span-7 flex flex-col gap-6">
+            <div class="lg:col-span-12 flex flex-col gap-6">
                 <!-- Card: Informasi Dasar -->
                 <div class="bg-surface-container-lowest rounded-xl shadow-md p-6 flex flex-col gap-4">
                     <h3 class="font-headline-md text-[20px] leading-[28px] text-primary">Informasi Dasar</h3>
@@ -59,10 +58,7 @@
                             <span class="font-label-md text-label-md text-on-surface-variant">Nama Lapangan</span>
                             <span class="text-on-surface font-medium">{{ $venue->name }}</span>
                         </div>
-                        <div class="flex flex-col gap-1">
-                            <span class="font-label-md text-label-md text-on-surface-variant">Slug</span>
-                            <span class="text-on-surface font-mono text-sm">{{ $venue->slug }}</span>
-                        </div>
+
                         <div class="col-span-1 md:col-span-2 flex flex-col gap-1">
                             <span class="font-label-md text-label-md text-on-surface-variant">Alamat</span>
                             <span class="text-on-surface">{{ $venue->address }}</span>
@@ -90,39 +86,7 @@
                 </div>
             </div>
             
-            <!-- Right Column: Media -->
-            <div class="lg:col-span-5 flex flex-col gap-6">
-                <div class="bg-surface-container-lowest rounded-xl shadow-md p-6 flex flex-col gap-4">
-                    <div class="flex justify-between items-center">
-                        <h3 class="font-headline-md text-[20px] leading-[28px] text-primary">Media Lapangan</h3>
-                        <span class="font-label-md text-label-md text-on-surface-variant">{{ $venue->images->count() }}/4 Foto</span>
-                    </div>
-                    
-                    <!-- Main Photo Preview -->
-                    <div class="aspect-[4/3] rounded-lg overflow-hidden relative bg-surface-container">
-                        @if($venue->mainImage)
-                            <img class="w-full h-full object-cover" src="{{ asset('storage/' . $venue->mainImage->image_path) }}" alt="{{ $venue->name }}">
-                            <span class="absolute top-2 left-2 px-2 py-1 bg-surface/80 backdrop-blur-sm text-primary font-label-md text-[12px] rounded-md">Utama</span>
-                        @else
-                            <div class="w-full h-full flex items-center justify-center text-on-surface-variant">
-                                <span class="material-symbols-outlined text-5xl">image</span>
-                            </div>
-                        @endif
-                    </div>
-                    
-                    <!-- Gallery Grid -->
-                    @php $galleryImages = $venue->images->where('is_main', false); @endphp
-                    @if($galleryImages->count() > 0)
-                        <div class="grid grid-cols-3 gap-2 mt-2">
-                            @foreach($galleryImages as $img)
-                                <div class="aspect-square rounded-md overflow-hidden">
-                                    <img class="w-full h-full object-cover" src="{{ asset('storage/' . $img->image_path) }}">
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
-            </div>
+            <!-- Right Column: Media (Removed) -->
         </div>
 
         <!-- Tab Content 2: Riwayat Penyewaan -->

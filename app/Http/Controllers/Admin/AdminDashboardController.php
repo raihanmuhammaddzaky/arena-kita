@@ -14,7 +14,7 @@ class AdminDashboardController extends Controller
     {
         $pendingUsers = User::where('status', 'pending')->count();
         $pendingPayments = Payment::where('status', 'pending')->count();
-        $activeVenues = Venue::where('is_active', true)->count();
+        $activeVenues = Venue::count();
         $totalVenues = Venue::count();
 
         $recentPayments = Payment::with(['booking.user', 'booking.venue'])

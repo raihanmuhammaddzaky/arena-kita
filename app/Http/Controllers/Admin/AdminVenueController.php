@@ -19,10 +19,7 @@ class AdminVenueController extends Controller
             $query->where('name', 'like', "%{$search}%");
         }
 
-        if ($request->has('status') && $request->input('status') !== '') {
-            $isActive = $request->input('status') === 'active';
-            $query->where('is_active', $isActive);
-        }
+
 
         $sortBy = $request->input('sort', 'name_asc');
         switch ($sortBy) {
@@ -56,7 +53,7 @@ class AdminVenueController extends Controller
             'price'             => 'required|integer|min:0',
             'time_unit_minutes' => 'required|integer|min:1',
             'max_capacity'      => 'required|integer|min:1',
-            'is_active'         => 'required|boolean',
+
             'main_image'        => 'required|image|mimes:jpg,jpeg,png,webp|max:5120',
             'gallery_images.*'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
         ]);
@@ -77,7 +74,7 @@ class AdminVenueController extends Controller
             'price'             => $validated['price'],
             'time_unit_minutes' => $validated['time_unit_minutes'],
             'max_capacity'      => $validated['max_capacity'],
-            'is_active'         => $validated['is_active'],
+
         ]);
 
         // Upload main image
@@ -133,7 +130,7 @@ class AdminVenueController extends Controller
             'price'             => 'required|integer|min:0',
             'time_unit_minutes' => 'required|integer|min:1',
             'max_capacity'      => 'required|integer|min:1',
-            'is_active'         => 'required|boolean',
+
             'main_image'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'gallery_images.*'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
         ]);
@@ -157,7 +154,7 @@ class AdminVenueController extends Controller
             'price'             => $validated['price'],
             'time_unit_minutes' => $validated['time_unit_minutes'],
             'max_capacity'      => $validated['max_capacity'],
-            'is_active'         => $validated['is_active'],
+
         ]);
 
         // Replace main image jika ada upload baru
@@ -211,10 +208,14 @@ class AdminVenueController extends Controller
 
     public function destroy(Venue $venue)
     {
-        // Soft delete: set is_active = false
-        $venue->update(['is_active' => false]);
+        // Delete the venue images from storage
+        foreach ($venue->images as $img) {
+            Storage::disk('public')->delete($img->image_path);
+        }
+        
+        $venue->delete();
 
         return redirect()->route('admin.venues.index')
-            ->with('success', 'Lapangan berhasil dinonaktifkan.');
+            ->with('success', 'Lapangan berhasil dihapus.');
     }
 }

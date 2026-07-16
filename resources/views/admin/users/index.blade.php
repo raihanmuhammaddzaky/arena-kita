@@ -49,11 +49,7 @@
                     <option value="approved" {{ request('status') === 'approved' ? 'selected' : '' }}>Approved</option>
                     <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>Rejected</option>
                 </select>
-                <select name="role" class="bg-[#f1f5f9] border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[#86efac] text-on-surface transition-all min-w-[120px]" onchange="this.form.submit()">
-                    <option value="">All Roles</option>
-                    <option value="admin" {{ request('role') === 'admin' ? 'selected' : '' }}>Admin</option>
-                    <option value="renter" {{ request('role') === 'renter' ? 'selected' : '' }}>Renter</option>
-                </select>
+
                 <button type="submit" class="bg-secondary text-on-secondary px-4 py-3 rounded-xl text-sm font-label-md hover:shadow-md transition-all">
                     Filter
                 </button>

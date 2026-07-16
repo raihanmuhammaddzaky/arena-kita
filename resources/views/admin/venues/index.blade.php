@@ -56,18 +56,12 @@
                     <!-- Image -->
                     <div class="aspect-video relative overflow-hidden bg-surface-container">
                         @if($venue->mainImage)
-                            <img src="{{ asset('storage/' . $venue->mainImage->image_path) }}" alt="{{ $venue->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <img src="{{ $venue->mainImage->image_url }}" alt="{{ $venue->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         @else
                             <div class="w-full h-full flex items-center justify-center text-on-surface-variant">
                                 <span class="material-symbols-outlined text-5xl">stadium</span>
                             </div>
                         @endif
-                        <div class="absolute top-3 right-3">
-                            <x-admin.badge 
-                                :color="$venue->is_active ? 'success' : 'error'" 
-                                :text="$venue->is_active ? 'Aktif' : 'Nonaktif'" 
-                            />
-                        </div>
                     </div>
                     <!-- Info -->
                     <div class="p-5">

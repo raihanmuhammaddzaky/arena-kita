@@ -38,7 +38,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 // ==========================================
 // ROUTE PENYEWA (RENTER)
 // ==========================================
-Route::middleware('auth')->name('renter.')->group(function () {
+Route::middleware(['auth', 'role:renter'])->name('renter.')->group(function () {
     
     // Dashboard
     Route::get('/dashboard', [RenterDashboardController::class, 'index'])->name('dashboard');
@@ -60,7 +60,7 @@ Route::middleware('auth')->name('renter.')->group(function () {
 // ==========================================
 // ROUTE ADMIN
 // ==========================================
-Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
@@ -78,6 +78,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
     // Payment Verification
     Route::get('/payments', [AdminPaymentController::class, 'index'])->name('payments.index');
+    Route::get('/payments/{payment}', [AdminPaymentController::class, 'show'])->name('payments.show');
     Route::patch('/payments/{payment}/verify', [AdminPaymentController::class, 'verify'])->name('payments.verify');
     Route::patch('/payments/{payment}/reject', [AdminPaymentController::class, 'reject'])->name('payments.reject');
 });

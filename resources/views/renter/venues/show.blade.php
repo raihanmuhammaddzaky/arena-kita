@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+
+<!-- Custom Alert Banner (Hidden by default) -->
+<div id="custom-alert" class="fixed top-24 left-1/2 -translate-x-1/2 z-[100] hidden bg-[#ef4444] text-white font-body-md px-6 py-4 rounded-xl shadow-lg flex items-center gap-3 transition-opacity duration-300 w-11/12 max-w-md">
+    <span class="material-symbols-outlined">error</span>
+    <span id="custom-alert-message">Peringatan: Anda belum memilih waktu bermain.</span>
+</div>
+
 <div class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-stack-md relative z-10">
     
     <!-- Breadcrumb Navigation -->
@@ -361,6 +368,27 @@
         
         // Initial load
         if(dateInput.value) fetchAvailability(dateInput.value);
+
+        // Form Submission Validation
+        const form = document.querySelector('form');
+        const customAlert = document.getElementById('custom-alert');
+        
+        form.addEventListener('submit', function(e) {
+            if (!startInput.value || !endInput.value) {
+                e.preventDefault();
+                
+                // Show Custom Alert
+                customAlert.classList.remove('hidden');
+                
+                // Hide after 3 seconds
+                setTimeout(() => {
+                    customAlert.classList.add('hidden');
+                }, 3000);
+
+                selectionError.textContent = "Silakan pilih kotak jam di atas.";
+                selectionError.classList.remove('hidden');
+            }
+        });
     });
 </script>
 @endpush

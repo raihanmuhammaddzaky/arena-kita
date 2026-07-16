@@ -61,82 +61,54 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-surface-container-highest">
-                        <!-- Row 1 -->
-                        <tr class="hover:bg-surface-container-low transition-colors group">
-                            <td class="py-4 px-6">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container">
-                                        <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfcZ_WriF_0hstD_6pgQVnS2gWTNPWyzxINrudSXg94D7ilNwAttndqlL2O1LpQKLrqfrnCJdsSiQ6ho2EX9czFjPnnhBJsHvFMmdAcWAD73ANSUtJVMnGsEfhS0K1IdnyDjUPNzAT1g88QVOqlkkoliVJl209U6dv1YepKIVrtawxKOZUWiF7wKBs4D6S_Nmw_szQwCCA23REG-TR9HNR8N4411n3ejqjJeE4SnQs7i7Fo6qv5mHJ_Q">
+                        @forelse($users as $user)
+                            <tr class="hover:bg-surface-container-low transition-colors group">
+                                <td class="py-4 px-6">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container flex items-center justify-center text-on-surface-variant font-bold uppercase">
+                                            {{ substr($user->name, 0, 2) }}
+                                        </div>
+                                        <div>
+                                            <p class="font-label-md text-label-md text-on-surface">{{ $user->name }}</p>
+                                            <p class="text-sm text-on-surface-variant">{{ $user->email }}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p class="font-label-md text-label-md text-on-surface">Alex Thompson</p>
-                                        <p class="text-sm text-on-surface-variant">alex.t@example.com</p>
+                                </td>
+                                <td class="py-4 px-6 text-sm text-on-surface capitalize">{{ $user->role }}</td>
+                                <td class="py-4 px-6">
+                                    <x-admin.badge 
+                                        :color="$user->status === 'approved' ? 'success' : ($user->status === 'pending' ? 'warning' : 'error')" 
+                                        :text="ucfirst($user->status)" 
+                                    />
+                                </td>
+                                <td class="py-4 px-6 text-sm text-on-surface-variant">{{ $user->created_at->format('M d, Y') }}</td>
+                                <td class="py-4 px-6 text-right">
+                                    <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <a href="{{ route('admin.users.edit', $user) }}" class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded-lg transition-colors" title="Edit">
+                                            <span class="material-symbols-outlined text-sm">edit</span>
+                                        </a>
+                                        <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="p-2 text-on-surface-variant hover:text-error hover:bg-error-container rounded-lg transition-colors" title="Delete">
+                                                <span class="material-symbols-outlined text-sm">delete</span>
+                                            </button>
+                                        </form>
                                     </div>
-                                </div>
-                            </td>
-                            <td class="py-4 px-6 text-sm text-on-surface">User</td>
-                            <td class="py-4 px-6">
-                                <x-admin.badge color="success" text="Active" />
-                            </td>
-                            <td class="py-4 px-6 text-sm text-on-surface-variant">Oct 12, 2023</td>
-                            <td class="py-4 px-6 text-right">
-                                <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded-lg transition-colors" title="Edit">
-                                        <span class="material-symbols-outlined text-sm">edit</span>
-                                    </button>
-                                    <button class="p-2 text-on-surface-variant hover:text-error hover:bg-error-container rounded-lg transition-colors" title="Suspend">
-                                        <span class="material-symbols-outlined text-sm">block</span>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <!-- Row 2 -->
-                        <tr class="hover:bg-surface-container-low transition-colors group">
-                            <td class="py-4 px-6">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container flex items-center justify-center text-on-surface-variant font-bold">
-                                        MR
-                                    </div>
-                                    <div>
-                                        <p class="font-label-md text-label-md text-on-surface">Maria Rodriguez</p>
-                                        <p class="text-sm text-on-surface-variant">m.rodriguez@example.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="py-4 px-6 text-sm text-on-surface">Manager</td>
-                            <td class="py-4 px-6">
-                                <x-admin.badge color="warning" text="Pending" />
-                            </td>
-                            <td class="py-4 px-6 text-sm text-on-surface-variant">Oct 14, 2023</td>
-                            <td class="py-4 px-6 text-right">
-                                <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded-lg transition-colors" title="Edit">
-                                        <span class="material-symbols-outlined text-sm">edit</span>
-                                    </button>
-                                    <button class="p-2 text-on-surface-variant hover:text-error hover:bg-error-container rounded-lg transition-colors" title="Suspend">
-                                        <span class="material-symbols-outlined text-sm">block</span>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="py-8 text-center text-on-surface-variant">Belum ada data user.</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
 
             <!-- Pagination -->
-            <div class="p-4 border-t border-surface-container-highest flex items-center justify-between relative z-10 bg-surface/50 backdrop-blur-sm">
-                <p class="text-sm text-on-surface-variant">Showing 1 to 2 of 2 entries</p>
-                <div class="flex gap-1">
-                    <button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container-highest text-on-surface-variant transition-colors disabled:opacity-50" disabled>
-                        <span class="material-symbols-outlined text-sm">chevron_left</span>
-                    </button>
-                    <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-container-highest text-on-surface font-medium transition-colors">1</button>
-                    <button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container-highest text-on-surface-variant transition-colors">
-                        <span class="material-symbols-outlined text-sm">chevron_right</span>
-                    </button>
-                </div>
+            <div class="p-4 border-t border-surface-container-highest relative z-10 bg-surface/50 backdrop-blur-sm">
+                {{ $users->links() }}
             </div>
         </div>
     </div>

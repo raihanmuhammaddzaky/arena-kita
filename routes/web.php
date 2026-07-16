@@ -44,9 +44,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         return view('admin.dashboard');
     })->name('dashboard');
 
-    Route::get('/users', function () {
-        return view('admin.users.index');
-    })->name('users.index');
+    Route::resource('users', \App\Http\Controllers\Admin\AdminUserController::class)->except(['show']);
 
     Route::prefix('bookings')->name('bookings.')->group(function () {
         Route::get('/', function () {

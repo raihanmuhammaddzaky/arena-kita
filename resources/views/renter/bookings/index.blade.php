@@ -26,6 +26,7 @@
                     <select name="status" class="w-full bg-transparent border-transparent focus:border-transparent focus:ring-0 outline-none font-body-md text-on-surface appearance-none pr-8 cursor-pointer">
                         <option value="">Semua Status</option>
                         <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                        <option value="waiting" {{ request('status') == 'waiting' ? 'selected' : '' }}>Menunggu Konfirmasi</option>
                         <option value="confirmed" {{ request('status') == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
                         <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Completed</option>
                         <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>Cancelled</option>

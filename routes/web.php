@@ -30,6 +30,8 @@ Route::name('renter.')->group(function () {
     // Riwayat Booking & Detail
     Route::get('/bookings', [RenterBookingController::class, 'index'])->name('bookings.index');
     Route::get('/bookings/{booking_code}', [RenterBookingController::class, 'show'])->name('bookings.show');
+    Route::post('/bookings/{booking_code}/cancel', [RenterBookingController::class, 'cancel'])->name('bookings.cancel');
+    Route::post('/bookings/{booking_code}/pay', [RenterBookingController::class, 'pay'])->name('bookings.pay');
 });
 
 // ==========================================

@@ -56,6 +56,18 @@
                         </div>
                     </div>
                 </div>
+            @elseif($booking->status == 'Waiting Verification')
+                <div class="bg-secondary-container border border-secondary/30 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-on-secondary shrink-0 shadow-sm">
+                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">hourglass_top</span>
+                        </div>
+                        <div>
+                            <h3 class="font-headline-md text-on-secondary-container text-[18px]">Menunggu Konfirmasi</h3>
+                            <p class="font-body-md text-on-secondary-container/80 text-sm">Bukti pembayaran telah kami terima dan sedang ditinjau oleh Admin.</p>
+                        </div>
+                    </div>
+                </div>
             @else
                 <div class="bg-surface-variant/30 border border-outline-variant/30 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div class="flex items-center gap-3">
@@ -132,25 +144,33 @@
                         <h3 class="font-headline-md text-primary text-[18px]">Unggah Bukti Pembayaran</h3>
                     </div>
                     <div class="p-6">
-                        <form action="#" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('renter.bookings.pay', $booking->booking_code) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="border-2 border-dashed border-outline-variant/50 rounded-xl p-8 flex flex-col items-center justify-center text-center bg-surface hover:bg-surface-container-lowest transition-colors cursor-pointer group mb-6 relative">
-                                <input type="file" name="payment_proof" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/jpeg,image/png,image/jpg,application/pdf">
+                                <input type="file" id="payment_proof" name="payment_proof" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/jpeg,image/png,image/jpg,application/pdf" required>
                                 <div class="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center text-on-tertiary-fixed-variant mb-4 group-hover:scale-110 transition-transform">
-                                    <span class="material-symbols-outlined text-[32px]">cloud_upload</span>
+                                    <span class="material-symbols-outlined text-[32px]" id="upload-icon">cloud_upload</span>
                                 </div>
-                                <h4 class="font-headline-md text-primary mb-2">Klik atau seret file ke sini</h4>
-                                <p class="font-body-md text-on-surface-variant text-sm max-w-xs">Mendukung format JPG, PNG, atau PDF. Ukuran maksimal file 5MB.</p>
+                                <h4 class="font-headline-md text-primary mb-2" id="file-name">Klik atau seret file ke sini</h4>
+                                <p class="font-body-md text-on-surface-variant text-sm max-w-xs" id="file-info">Mendukung format JPG, PNG, atau PDF. Ukuran maksimal file 5MB.</p>
                             </div>
+                            @error('payment_proof')
+                                <p class="text-error font-body-md text-[12px] mb-4">{{ $message }}</p>
+                            @enderror
 
                             <div class="flex flex-col sm:flex-row gap-4 justify-end">
-                                <button type="button" class="border border-error text-error font-label-md px-6 py-3 rounded-xl hover:bg-error/10 transition-colors">
+                                <button type="button" onclick="document.getElementById('cancel-modal').classList.remove('hidden')" class="border border-error text-error font-label-md px-6 py-3 rounded-xl hover:bg-error/10 transition-colors flex items-center justify-center">
                                     Batalkan Pesanan
                                 </button>
                                 <button type="submit" class="bg-on-tertiary-fixed-variant text-on-primary font-label-md px-8 py-3 rounded-xl hover:bg-primary transition-colors shadow-sm">
                                     Konfirmasi Pembayaran
                                 </button>
                             </div>
+                        </form>
+                        
+                        <!-- Hidden form for cancellation -->
+                        <form id="cancel-form" action="{{ route('renter.bookings.cancel', $booking->booking_code) }}" method="POST" class="hidden">
+                            @csrf
                         </form>
                     </div>
                 </div>
@@ -199,4 +219,51 @@
 
     </div>
 </div>
+
+<!-- Cancel Confirmation Modal -->
+<div id="cancel-modal" class="fixed inset-0 z-[100] hidden">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onclick="document.getElementById('cancel-modal').classList.add('hidden')"></div>
+    
+    <!-- Modal Panel -->
+    <div class="fixed inset-0 flex items-center justify-center p-4 z-10">
+        <div class="bg-surface-container-lowest rounded-3xl max-w-sm w-full p-6 shadow-xl relative overflow-hidden transform transition-all">
+            <!-- Icon -->
+            <div class="w-16 h-16 bg-error/10 text-error rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="material-symbols-outlined text-[32px]">warning</span>
+            </div>
+            
+            <h3 class="font-headline-md text-primary text-center mb-2 text-[20px]">Batalkan Pesanan?</h3>
+            <p class="font-body-md text-on-surface-variant text-center mb-6">Apakah Anda yakin ingin membatalkan pesanan ini? Tindakan ini tidak dapat diurungkan.</p>
+            
+            <div class="flex gap-3">
+                <button type="button" onclick="document.getElementById('cancel-modal').classList.add('hidden')" class="flex-1 bg-surface-container-low text-on-surface font-label-md py-3 rounded-xl hover:bg-surface-container transition-colors border border-outline-variant/30">
+                    Kembali
+                </button>
+                <button type="button" onclick="document.getElementById('cancel-form').submit()" class="flex-1 bg-[#ef4444] text-white font-label-md py-3 rounded-xl hover:bg-[#dc2626] transition-colors shadow-sm">
+                    Ya, Batalkan
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // File Upload UI Update
+        const fileInput = document.getElementById('payment_proof');
+        if (fileInput) {
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    const fileName = e.target.files[0].name;
+                    document.getElementById('file-name').textContent = fileName;
+                    document.getElementById('file-info').textContent = "File siap diunggah.";
+                    document.getElementById('upload-icon').textContent = "check_circle";
+                    document.getElementById('upload-icon').classList.replace('text-on-tertiary-fixed-variant', 'text-[#10b981]');
+                }
+            });
+        }
+    });
+</script>
+@endpush
 @endsection

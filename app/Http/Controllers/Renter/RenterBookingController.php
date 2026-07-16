@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Renter;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\User;
+use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -49,6 +50,11 @@ class RenterBookingController extends Controller
                 }
             }
 
+            // Batal otomatis untuk yang pending lebih dari 5 menit
+            Booking::where('status', 'pending')
+                   ->where('created_at', '<', Carbon::now()->subMinutes(5))
+                   ->update(['status' => 'cancelled']);
+
             $bookingsRaw = $query->orderBy('booking_date', 'desc')->get();
 
             $bookings = $bookingsRaw->map(function ($booking) {
@@ -60,6 +66,7 @@ class RenterBookingController extends Controller
 
                 $statusMap = [
                     'pending' => ['label' => 'Pending', 'color' => 'bg-[#f59e0b] text-on-primary'],
+                    'waiting' => ['label' => 'Menunggu Konfirmasi', 'color' => 'bg-secondary text-on-secondary'],
                     'confirmed' => ['label' => 'Confirmed', 'color' => 'bg-tertiary-fixed text-on-tertiary-fixed-variant'],
                     'completed' => ['label' => 'Completed', 'color' => 'bg-[#3b82f6] text-white'],
                     'cancelled' => ['label' => 'Cancelled', 'color' => 'bg-surface-variant text-on-surface-variant'],
@@ -135,8 +142,15 @@ class RenterBookingController extends Controller
     {
         $booking = Booking::with(['venue.mainImage', 'payment'])->where('booking_code', $booking_code)->firstOrFail();
 
+        // Batal otomatis jika lebih dari 5 menit
+        if ($booking->status === 'pending' && Carbon::parse($booking->created_at)->addMinutes(5)->isPast()) {
+            $booking->update(['status' => 'cancelled']);
+            $booking->status = 'cancelled'; // Update local object
+        }
+
         $statusMap = [
             'pending' => 'Pending',
+            'waiting' => 'Waiting Verification',
             'confirmed' => 'Confirmed',
             'cancelled' => 'Cancelled',
         ];
@@ -161,10 +175,49 @@ class RenterBookingController extends Controller
             'tax' => $tax,
             'total_price' => $subtotal + $adminFee + $tax,
             'status' => $statusMap[$booking->status] ?? ucfirst($booking->status),
-            'deadline' => Carbon::parse($booking->created_at)->addHours(2)->format('H:i') . ' WIB Hari ini',
+            'deadline' => Carbon::parse($booking->created_at)->addMinutes(5)->format('H:i') . ' WIB Hari ini',
             'venue_image' => $booking->venue->mainImage ? $booking->venue->mainImage->image_path : 'https://placehold.co/600x400?text=No+Image',
         ];
 
         return view('renter.bookings.show', compact('booking'))->with('booking', $bookingData);
+    }
+
+    public function cancel($booking_code)
+    {
+        $booking = Booking::where('booking_code', $booking_code)->firstOrFail();
+        
+        if ($booking->status === 'pending') {
+            $booking->update(['status' => 'cancelled']);
+            return redirect()->back()->with('success', 'Pesanan berhasil dibatalkan.');
+        }
+
+        return redirect()->back()->with('error', 'Pesanan tidak dapat dibatalkan karena status sudah bukan pending.');
+    }
+
+    public function pay(Request $request, $booking_code)
+    {
+        $booking = Booking::where('booking_code', $booking_code)->firstOrFail();
+
+        // Validasi: hanya pesanan pending yang belum kedaluwarsa yang bisa dibayar
+        if ($booking->status !== 'pending' || Carbon::parse($booking->created_at)->addMinutes(5)->isPast()) {
+            return redirect()->back()->with('error', 'Pembayaran gagal. Pesanan sudah dibatalkan atau waktu pembayaran telah habis.');
+        }
+
+        $request->validate([
+            'payment_proof' => 'required|file|mimes:jpeg,png,jpg,pdf|max:5120',
+        ]);
+
+        $path = $request->file('payment_proof')->store('payments', 'public');
+
+        Payment::create([
+            'booking_id' => $booking->id,
+            'proof_image' => $path,
+            'status' => 'pending', // Atau 'completed' jika ingin langsung terkonfirmasi
+        ]);
+
+        // Mengubah status booking menjadi waiting verification
+        $booking->update(['status' => 'waiting']);
+
+        return redirect()->back()->with('success', 'Bukti pembayaran berhasil diunggah. Mohon tunggu konfirmasi dari Admin.');
     }
 }

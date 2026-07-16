@@ -7,9 +7,9 @@ use Illuminate\View\Component;
 
 class StatusBanner extends Component
 {
-    public Booking $booking;
+    public mixed $booking;
 
-    public function __construct(Booking $booking)
+    public function __construct(mixed $booking)
     {
         $this->booking = $booking;
     }

@@ -58,6 +58,6 @@
                     {{ $venue->address ?? 'Alamat belum tersedia.' }}
                 </p>
             </div>
-        </div>
+        </x-ui.card>
     </div>
 </div>

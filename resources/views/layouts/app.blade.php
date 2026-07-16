@@ -33,16 +33,6 @@
                     <a class="font-label-md text-label-md {{ request()->routeIs('renter.bookings.*') ? 'text-primary font-bold border-b-2 border-primary pb-1' : 'text-on-surface-variant hover:text-primary transition-colors duration-300' }}" href="{{ route('renter.bookings.index') }}">Riwayat Pemesanan</a>
                 </li>
             </ul>
-            
-            <div class="flex items-center gap-4">
-
-                <div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden cursor-pointer transition-all duration-200 active:scale-95 shadow-sm border border-outline-variant/20 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-on-surface-variant">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                </div>
-            </div>
         </div>
     </nav>
 

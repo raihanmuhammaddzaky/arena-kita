@@ -43,4 +43,33 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('dashboard');
+
+    Route::get('/users', function () {
+        return view('admin.users.index');
+    })->name('users.index');
+
+    Route::prefix('bookings')->name('bookings.')->group(function () {
+        Route::get('/', function () {
+            return view('admin.bookings.index');
+        })->name('index');
+        Route::get('/verifications', function () {
+            return view('admin.bookings.verifications');
+        })->name('verifications');
+    });
+
+    Route::prefix('venues')->name('venues.')->group(function () {
+        Route::get('/', function () {
+            return view('admin.venues.index');
+        })->name('index');
+        Route::get('/create', function () {
+            return view('admin.venues.create');
+        })->name('create');
+        Route::get('/{id}', function () {
+            return view('admin.venues.show');
+        })->name('show');
+    });
+
+    Route::get('/reports', function () {
+        return view('admin.reports');
+    })->name('reports');
 });

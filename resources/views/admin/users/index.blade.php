@@ -3,7 +3,7 @@
 @section('title', 'ArenaKita Admin - User Management')
 
 @section('content')
-    <div class="flex flex-col gap-stack-lg max-w-container-max mx-auto w-full">
+    <div class="max-w-container-max mx-auto flex flex-col gap-stack-lg">
         <!-- Header Section -->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <x-admin.page-header 
@@ -12,7 +12,17 @@
             />
         </div>
 
+        <!-- Flash Messages -->
+        @if(session('success'))
+            <div class="bg-secondary-container text-on-secondary-container px-4 py-3 rounded-xl flex items-center gap-2">
+                <span class="material-symbols-outlined">check_circle</span>
+                {{ session('success') }}
+            </div>
+        @endif
+
         <!-- Pending Verification Alert Bento -->
+        @php $pendingCount = $users->where('status', 'pending')->count(); @endphp
+        @if($pendingCount > 0 || request('status') === 'pending')
         <div class="bg-surface-container-low rounded-2xl p-6 relative overflow-hidden shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
             <div class="relative z-10 flex items-start gap-4">
                 <div class="w-12 h-12 rounded-full bg-secondary-container/20 text-on-secondary-container flex items-center justify-center shrink-0">
@@ -24,28 +34,31 @@
                 </div>
             </div>
         </div>
+        @endif
 
         <!-- Filters & Search -->
-        <div class="flex flex-col md:flex-row gap-4 items-center justify-between bg-surface p-4 rounded-2xl shadow-sm border border-transparent">
+        <form method="GET" action="{{ route('admin.users.index') }}" class="flex flex-col md:flex-row gap-4 items-center justify-between bg-surface p-4 rounded-2xl shadow-sm border border-transparent">
             <div class="relative w-full md:w-96">
                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
-                <input class="w-full bg-[#f1f5f9] border-none rounded-xl pl-10 pr-4 py-3 text-sm focus:ring-2 focus:ring-[#86efac] text-on-surface transition-all" placeholder="Search by name or email..." type="text">
+                <input name="search" value="{{ request('search') }}" class="w-full bg-[#f1f5f9] border-none rounded-xl pl-10 pr-4 py-3 text-sm focus:ring-2 focus:ring-[#86efac] text-on-surface transition-all" placeholder="Search by name or email..." type="text">
             </div>
             <div class="flex gap-3 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
-                <select class="bg-[#f1f5f9] border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[#86efac] text-on-surface transition-all min-w-[120px]">
+                <select name="status" class="bg-[#f1f5f9] border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[#86efac] text-on-surface transition-all min-w-[120px]" onchange="this.form.submit()">
                     <option value="">All Status</option>
-                    <option value="active">Active</option>
-                    <option value="pending">Pending</option>
-                    <option value="suspended">Suspended</option>
+                    <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pending</option>
+                    <option value="approved" {{ request('status') === 'approved' ? 'selected' : '' }}>Approved</option>
+                    <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>Rejected</option>
                 </select>
-                <select class="bg-[#f1f5f9] border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[#86efac] text-on-surface transition-all min-w-[120px]">
+                <select name="role" class="bg-[#f1f5f9] border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[#86efac] text-on-surface transition-all min-w-[120px]" onchange="this.form.submit()">
                     <option value="">All Roles</option>
-                    <option value="user">User</option>
-                    <option value="admin">Admin</option>
-                    <option value="manager">Manager</option>
+                    <option value="admin" {{ request('role') === 'admin' ? 'selected' : '' }}>Admin</option>
+                    <option value="renter" {{ request('role') === 'renter' ? 'selected' : '' }}>Renter</option>
                 </select>
+                <button type="submit" class="bg-secondary text-on-secondary px-4 py-3 rounded-xl text-sm font-label-md hover:shadow-md transition-all">
+                    Filter
+                </button>
             </div>
-        </div>
+        </form>
 
         <!-- User Table -->
         <div class="bg-surface rounded-2xl shadow-md overflow-hidden relative">
@@ -54,6 +67,7 @@
                     <thead>
                         <tr class="border-b border-surface-container-highest bg-surface-container-low/50">
                             <th class="py-4 px-6 font-label-md text-label-md text-on-surface-variant">User</th>
+                            <th class="py-4 px-6 font-label-md text-label-md text-on-surface-variant">Phone</th>
                             <th class="py-4 px-6 font-label-md text-label-md text-on-surface-variant">Role</th>
                             <th class="py-4 px-6 font-label-md text-label-md text-on-surface-variant">Status</th>
                             <th class="py-4 px-6 font-label-md text-label-md text-on-surface-variant">Join Date</th>
@@ -74,6 +88,7 @@
                                         </div>
                                     </div>
                                 </td>
+                                <td class="py-4 px-6 text-sm text-on-surface-variant">{{ $user->phone ?? '-' }}</td>
                                 <td class="py-4 px-6 text-sm text-on-surface capitalize">{{ $user->role }}</td>
                                 <td class="py-4 px-6">
                                     <x-admin.badge 
@@ -83,23 +98,30 @@
                                 </td>
                                 <td class="py-4 px-6 text-sm text-on-surface-variant">{{ $user->created_at->format('M d, Y') }}</td>
                                 <td class="py-4 px-6 text-right">
-                                    <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <a href="{{ route('admin.users.edit', $user) }}" class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded-lg transition-colors" title="Edit">
-                                            <span class="material-symbols-outlined text-sm">edit</span>
-                                        </a>
-                                        <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="p-2 text-on-surface-variant hover:text-error hover:bg-error-container rounded-lg transition-colors" title="Delete">
-                                                <span class="material-symbols-outlined text-sm">delete</span>
-                                            </button>
-                                        </form>
+                                    <div class="flex items-center justify-end gap-1">
+                                        {{-- Approve/Reject buttons for pending users --}}
+                                        @if($user->status === 'pending')
+                                            <form action="{{ route('admin.users.approve', $user) }}" method="POST" class="inline-block">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="p-2 text-secondary hover:bg-secondary-container rounded-lg transition-colors" title="Approve">
+                                                    <span class="material-symbols-outlined text-sm">check_circle</span>
+                                                </button>
+                                            </form>
+                                            <form action="{{ route('admin.users.reject', $user) }}" method="POST" class="inline-block">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="p-2 text-error hover:bg-error-container rounded-lg transition-colors" title="Reject">
+                                                    <span class="material-symbols-outlined text-sm">cancel</span>
+                                                </button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="py-8 text-center text-on-surface-variant">Belum ada data user.</td>
+                                <td colspan="6" class="py-8 text-center text-on-surface-variant">Belum ada data user.</td>
                             </tr>
                         @endforelse
                     </tbody>

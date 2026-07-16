@@ -37,63 +37,25 @@ class AdminUserController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
-    public function create()
+    /**
+     * Approve a pending user.
+     */
+    public function approve(User $user)
     {
-        return view('admin.users.create');
+        $user->update(['status' => 'approved']);
+
+        return redirect()->back()
+            ->with('success', "User {$user->name} berhasil disetujui.");
     }
 
-    public function store(Request $request)
+    /**
+     * Reject a pending user.
+     */
+    public function reject(User $user)
     {
-        $validated = $request->validate([
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-            'phone'    => 'nullable|string|max:20',
-            'role'     => 'required|in:admin,renter',
-            'status'   => 'required|in:pending,approved,rejected',
-        ]);
+        $user->update(['status' => 'rejected']);
 
-        $validated['password'] = Hash::make($validated['password']);
-
-        User::create($validated);
-
-        return redirect()->route('admin.users.index')
-            ->with('success', 'User berhasil ditambahkan.');
-    }
-
-    public function edit(User $user)
-    {
-        return view('admin.users.edit', compact('user'));
-    }
-
-    public function update(Request $request, User $user)
-    {
-        $validated = $request->validate([
-            'name'     => 'required|string|max:255',
-            'email'    => ['required', 'email', Rule::unique('users')->ignore($user->id)],
-            'password' => 'nullable|string|min:8|confirmed',
-            'phone'    => 'nullable|string|max:20',
-            'role'     => 'required|in:admin,renter',
-            'status'   => 'required|in:pending,approved,rejected',
-        ]);
-
-        if (!empty($validated['password'])) {
-            $validated['password'] = Hash::make($validated['password']);
-        } else {
-            unset($validated['password']);
-        }
-
-        $user->update($validated);
-
-        return redirect()->route('admin.users.index')
-            ->with('success', 'User berhasil diperbarui.');
-    }
-
-    public function destroy(User $user)
-    {
-        $user->delete();
-
-        return redirect()->route('admin.users.index')
-            ->with('success', 'User berhasil dihapus.');
+        return redirect()->back()
+            ->with('success', "User {$user->name} berhasil ditolak.");
     }
 }

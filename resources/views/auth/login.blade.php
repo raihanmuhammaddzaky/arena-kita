@@ -33,6 +33,16 @@
                     <a href="/" class="font-display text-headline-lg-mobile md:text-headline-lg text-primary tracking-tight">ArenaKita</a>
                     <p class="font-body-md text-body-md text-on-surface-variant">Calm focus. Better play. Sign in to your account.</p>
                 </div>
+                <!-- Success Flash Message (after register) -->
+                @if(session('success'))
+                    <div class="bg-secondary-container border-l-4 border-secondary rounded-r-lg p-4 flex items-start gap-3 shadow-ambient-sm">
+                        <span class="material-symbols-outlined text-on-secondary-container flex-shrink-0 mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        <p class="font-body-md text-[14px] leading-relaxed text-on-secondary-container">
+                            {{ session('success') }}
+                        </p>
+                    </div>
+                @endif
+
                 <!-- Alert Banner -->
                 <div class="bg-surface-container-low border-l-4 border-primary-fixed-dim rounded-r-lg p-4 flex items-start gap-3 shadow-ambient-sm">
                     <span class="material-symbols-outlined text-on-primary-container flex-shrink-0 mt-0.5" style="font-variation-settings: 'FILL' 1;">info</span>

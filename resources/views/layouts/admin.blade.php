@@ -130,7 +130,9 @@
         
         <!-- Main Canvas -->
         <main class="flex-1 p-gutter md:p-margin-desktop overflow-y-auto">
-            @yield('content')
+            <div class="w-full md:w-[80%] mx-auto">
+                @yield('content')
+            </div>
         </main>
         
     </div>

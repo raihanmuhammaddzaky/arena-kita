@@ -1,22 +1,44 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Renter\RenterDashboardController;
 use App\Http\Controllers\Renter\RenterVenueController;
 use App\Http\Controllers\Renter\RenterBookingController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminVenueController;
+use App\Http\Controllers\Admin\AdminAnnouncementController;
+use App\Http\Controllers\Admin\AdminPaymentController;
 
 // ==========================================
 // PUBLIC ROUTES
 // ==========================================
 Route::get('/', function () {
-    return redirect()->route('renter.dashboard');
+    if (auth()->check()) {
+        return auth()->user()->role === 'admin'
+            ? redirect()->route('admin.dashboard')
+            : redirect()->route('renter.dashboard');
+    }
+    return redirect()->route('login');
 });
 
 // ==========================================
-// ROUTE PENYEWA (RENTER)
-// Catatan: Middleware Auth belum diterapkan
+// AUTH ROUTES (GUEST ONLY)
 // ==========================================
-Route::name('renter.')->group(function () {
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
+});
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+
+// ==========================================
+// ROUTE PENYEWA (RENTER)
+// ==========================================
+Route::middleware('auth')->name('renter.')->group(function () {
     
     // Dashboard
     Route::get('/dashboard', [RenterDashboardController::class, 'index'])->name('dashboard');
@@ -37,37 +59,25 @@ Route::name('renter.')->group(function () {
 
 // ==========================================
 // ROUTE ADMIN
-// Catatan: Middleware Auth & Role belum diterapkan
 // ==========================================
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
-    Route::resource('users', \App\Http\Controllers\Admin\AdminUserController::class)->except(['show']);
+    // Dashboard
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
-    Route::prefix('bookings')->name('bookings.')->group(function () {
-        Route::get('/', function () {
-            return view('admin.bookings.index');
-        })->name('index');
-        Route::get('/verifications', function () {
-            return view('admin.bookings.verifications');
-        })->name('verifications');
-    });
+    // User Management + Approve/Reject
+    Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+    Route::patch('/users/{user}/approve', [AdminUserController::class, 'approve'])->name('users.approve');
+    Route::patch('/users/{user}/reject', [AdminUserController::class, 'reject'])->name('users.reject');
 
-    Route::prefix('venues')->name('venues.')->group(function () {
-        Route::get('/', function () {
-            return view('admin.venues.index');
-        })->name('index');
-        Route::get('/create', function () {
-            return view('admin.venues.create');
-        })->name('create');
-        Route::get('/{id}', function () {
-            return view('admin.venues.show');
-        })->name('show');
-    });
+    // Venue Management (CRUD)
+    Route::resource('venues', AdminVenueController::class);
 
-    Route::get('/reports', function () {
-        return view('admin.reports');
-    })->name('reports');
+    // Announcement Management (CRUD)
+    Route::resource('announcements', AdminAnnouncementController::class)->except(['show']);
+
+    // Payment Verification
+    Route::get('/payments', [AdminPaymentController::class, 'index'])->name('payments.index');
+    Route::patch('/payments/{payment}/verify', [AdminPaymentController::class, 'verify'])->name('payments.verify');
+    Route::patch('/payments/{payment}/reject', [AdminPaymentController::class, 'reject'])->name('payments.reject');
 });

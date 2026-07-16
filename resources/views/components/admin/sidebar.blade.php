@@ -10,19 +10,11 @@
         </div>
     </div>
     
-    <!-- CTA -->
-    <div class="px-2 mb-stack-sm">
-        <a href="{{ route('admin.dashboard') }}" class="w-full bg-secondary text-on-secondary py-3 px-4 rounded-xl text-label-md font-label-md shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2">
-            <span class="material-symbols-outlined">add</span>
-            New Booking
-        </a>
-    </div>
-    
     <!-- Navigation Links -->
     <nav class="flex-1 flex flex-col gap-1 overflow-y-auto mt-2">
         <!-- Dashboard -->
         <a class="flex items-center gap-3 {{ request()->routeIs('admin.dashboard') ? 'bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed' : 'text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-on-primary-fixed-variant' }} rounded-xl px-4 py-3 transition-transform duration-100" href="{{ route('admin.dashboard') }}">
-            <span class="material-symbols-outlined" {{ request()->routeIs('admin.dashboard') ? 'data-weight="fill" style="font-variation-settings: \'FILL\' 1;"' : '' }}>dashboard</span>
+            <span class="material-symbols-outlined" {{ request()->routeIs('admin.dashboard') ? 'style=font-variation-settings:\'FILL\'1;' : '' }}>dashboard</span>
             <span class="text-label-md font-label-md">Overview</span>
         </a>
         
@@ -32,41 +24,34 @@
             <span class="text-label-md font-label-md">Users</span>
         </a>
         
-        <!-- Bookings -->
-        <a class="flex items-center gap-3 {{ request()->routeIs('admin.bookings.index') ? 'bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed' : 'text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-on-primary-fixed-variant' }} px-4 py-3 rounded-xl transition-all duration-200" href="{{ route('admin.bookings.index') }}">
-            <span class="material-symbols-outlined">event_available</span>
-            <span class="text-label-md font-label-md">Bookings</span>
-        </a>
-        
         <!-- Venues -->
         <a class="flex items-center gap-3 {{ request()->routeIs('admin.venues.*') ? 'bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed' : 'text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-on-primary-fixed-variant' }} px-4 py-3 rounded-xl transition-all duration-200" href="{{ route('admin.venues.index') }}">
             <span class="material-symbols-outlined">stadium</span>
             <span class="text-label-md font-label-md">Venues</span>
         </a>
         
-        <!-- Payments -->
-        <a class="flex items-center gap-3 {{ request()->routeIs('admin.bookings.verifications') ? 'bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed' : 'text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-on-primary-fixed-variant' }} px-4 py-3 rounded-xl transition-all duration-200" href="{{ route('admin.bookings.verifications') }}">
-            <span class="material-symbols-outlined">payments</span>
-            <span class="text-label-md font-label-md">Payments</span>
+        <!-- Announcements -->
+        <a class="flex items-center gap-3 {{ request()->routeIs('admin.announcements.*') ? 'bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed' : 'text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-on-primary-fixed-variant' }} px-4 py-3 rounded-xl transition-all duration-200" href="{{ route('admin.announcements.index') }}">
+            <span class="material-symbols-outlined">campaign</span>
+            <span class="text-label-md font-label-md">Pengumuman</span>
         </a>
         
-        <!-- Reports -->
-        <a class="flex items-center gap-3 {{ request()->routeIs('admin.reports') ? 'bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed' : 'text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-on-primary-fixed-variant' }} px-4 py-3 rounded-xl transition-all duration-200" href="{{ route('admin.reports') }}">
-            <span class="material-symbols-outlined">analytics</span>
-            <span class="text-label-md font-label-md">Reports</span>
+        <!-- Payments -->
+        <a class="flex items-center gap-3 {{ request()->routeIs('admin.payments.*') ? 'bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed' : 'text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-on-primary-fixed-variant' }} px-4 py-3 rounded-xl transition-all duration-200" href="{{ route('admin.payments.index') }}">
+            <span class="material-symbols-outlined">payments</span>
+            <span class="text-label-md font-label-md">Verifikasi Bayar</span>
         </a>
     </nav>
     
     <!-- Footer Links -->
     <div class="mt-auto border-t border-outline-variant/30 pt-4 flex flex-col gap-1">
-        <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-tertiary-container px-4 py-3 hover:bg-surface-container-high dark:hover:bg-on-primary-fixed-variant rounded-xl transition-all duration-200" href="#">
-            <span class="material-symbols-outlined">help</span>
-            <span class="text-label-md font-label-md">Help Center</span>
-        </a>
-        <!-- Add a logout form trigger -->
-        <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-tertiary-container px-4 py-3 hover:bg-surface-container-high dark:hover:bg-on-primary-fixed-variant rounded-xl transition-all duration-200" href="#">
-            <span class="material-symbols-outlined">logout</span>
-            <span class="text-label-md font-label-md">Logout</span>
-        </a>
+        <!-- Logout -->
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="w-full flex items-center gap-3 text-on-surface-variant dark:text-on-tertiary-container px-4 py-3 hover:bg-surface-container-high dark:hover:bg-on-primary-fixed-variant rounded-xl transition-all duration-200">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="text-label-md font-label-md">Logout</span>
+            </button>
+        </form>
     </div>
 </aside>

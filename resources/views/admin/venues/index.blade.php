@@ -32,13 +32,7 @@
                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-secondary transition-colors">search</span>
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="Search venues by name..." class="w-full bg-surface-container-low border-none rounded-xl py-2.5 pl-10 pr-4 text-on-surface font-body-md focus:ring-2 focus:ring-secondary-container transition-all shadow-sm hover:shadow-md">
             </div>
-            <div class="flex items-center space-x-2">
-                <select name="status" class="bg-surface-container-low border-none rounded-lg text-on-surface font-body-md text-body-md focus:ring-2 focus:ring-secondary-container cursor-pointer py-2 pl-3 pr-8" onchange="this.form.submit()">
-                    <option value="">All Status</option>
-                    <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Active</option>
-                    <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Inactive</option>
-                </select>
-            </div>
+
             <div class="ml-auto flex items-center space-x-2">
                 <span class="text-sm text-on-surface-variant mr-2">Sort by:</span>
                 <select name="sort" class="bg-surface-container-low border-none rounded-lg text-on-surface font-body-md text-body-md focus:ring-2 focus:ring-secondary-container cursor-pointer py-2 pl-3 pr-8" onchange="this.form.submit()">

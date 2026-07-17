@@ -37,7 +37,7 @@ class AuthTest extends TestCase
             'phone' => '081234567890',
         ]);
 
-        $response->assertRedirect('/login');
+        $response->assertRedirect('/pending');
         $this->assertDatabaseHas('users', [
             'email' => 'johndoe@example.com',
             'role' => 'renter',

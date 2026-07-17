@@ -1,59 +1,105 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Arena Kita
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Arena Kita adalah aplikasi berbasis web yang dibangun menggunakan framework Laravel. Dokumen ini menjelaskan cara melakukan instalasi dan menjalankan aplikasi ini di lingkungan lokal Anda menggunakan [Laragon](https://laragon.org/).
 
-## About Laravel
+## Persyaratan Sistem
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Sebelum menjalankan aplikasi, pastikan sistem Anda memiliki:
+- **Laragon** (disarankan versi Full yang sudah mencakup Apache/Nginx, MySQL, PHP)
+- **PHP** >= 8.1 (sesuai kebutuhan versi Laravel yang digunakan)
+- **Composer** (sudah termasuk dalam Laragon)
+- **Node.js** & **npm** (sudah termasuk dalam Laragon)
+- **Git** (untuk melakukan clone repository)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Langkah-langkah Instalasi
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Ikuti langkah-langkah di bawah ini untuk menjalankan aplikasi di lokal menggunakan Laragon:
 
-## Learning Laravel
+### 1. Clone Repository
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+Buka terminal (sangat disarankan menggunakan terminal bawaan Laragon) dan masuk ke folder `www` pada instalasi Laragon Anda (biasanya di `C:\laragon\www`). Lalu jalankan perintah berikut:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+git clone https://github.com/raihanmuhammaddzaky/arena-kita.git
+cd arena-kita
+```
+*(Catatan: Sesuaikan URL repository jika URL yang digunakan berbeda)*
 
-## Laravel Sponsors
+### 2. Install Dependensi PHP (Composer)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Setelah masuk ke dalam folder proyek, jalankan perintah berikut untuk menginstal semua library PHP yang dibutuhkan oleh aplikasi:
 
-### Premium Partners
+```bash
+composer install
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 3. Install Dependensi Frontend (NPM)
 
-## Contributing
+Aplikasi ini menggunakan Node.js untuk mengelola dan mengkompilasi aset frontend (seperti CSS, JavaScript, Tailwind, Vite, dll). Jalankan perintah berikut:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+npm install
+npm run build
+```
+*(Catatan: Gunakan `npm run dev` jika Anda ingin melakukan pengembangan/perubahan kode dan melihat hasilnya secara realtime).*
 
-## Code of Conduct
+### 4. Konfigurasi Environment File (.env)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Aplikasi membutuhkan file konfigurasi environment. Salin file `.env.example` menjadi `.env`:
 
-## Security Vulnerabilities
+```bash
+cp .env.example .env
+```
+*(Jika menggunakan Windows Command Prompt, jalankan: `copy .env.example .env`)*
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Buka file `.env` menggunakan teks editor pilihan Anda (misalnya VS Code) dan sesuaikan konfigurasi database dengan Laragon Anda. Biasanya seperti ini:
 
-## License
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=arena_kita   # (Atau nama database yang akan Anda buat di langkah 6)
+DB_USERNAME=root
+DB_PASSWORD=             # (Biarkan kosong jika ini adalah pengaturan default Laragon)
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 5. Generate Application Key
+
+Jalankan perintah ini untuk membuat key enkripsi aplikasi Laravel Anda:
+
+```bash
+php artisan key:generate
+```
+
+### 6. Buat Database dan Jalankan Migrasi
+
+1. Buka aplikasi **Laragon** Anda dan pastikan servis **MySQL** sudah berjalan (Anda bisa klik tombol `Start All`).
+2. Buat database baru di MySQL dengan nama yang sama persis seperti yang Anda masukkan di `DB_DATABASE` pada file `.env` (misalnya: `arena_kita`). Anda bisa menggunakan fitur `Database` di Laragon yang biasanya membuka HeidiSQL, phpMyAdmin, atau tools lainnya.
+3. Setelah database berhasil dibuat, jalankan migrasi dan seeder untuk membangun struktur tabel dan mengisi data awal aplikasi:
+
+```bash
+php artisan migrate --seed
+```
+
+### 7. Link Storage (Opsional namun disarankan)
+
+Untuk memastikan gambar atau file yang diupload dapat diakses melalui web secara publik, jalankan:
+
+```bash
+php artisan storage:link
+```
+
+### 8. Menjalankan Aplikasi
+
+Jika Anda menggunakan Laragon dan fitur *Auto Virtual Hosts* aktif, Anda bisa langsung membuka browser dan mengakses:
+`http://arena-kita.test` (menyesuaikan nama folder proyek, jika foldernya `arena-kita` maka URLnya adalah `arena-kita.test`).
+
+Sebagai alternatif, Anda juga bisa menggunakan server lokal bawaan PHP/Laravel dengan menjalankan:
+
+```bash
+php artisan serve
+```
+Lalu akses aplikasi melalui browser di URL: `http://localhost:8000` atau `http://127.0.0.1:8000`.
+
+---
+**Selesai!** Aplikasi Arena Kita sekarang sudah berjalan di perangkat lokal Anda.

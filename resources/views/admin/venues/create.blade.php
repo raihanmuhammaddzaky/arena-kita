@@ -116,19 +116,7 @@
                             <p class="text-xs text-on-surface-variant mt-1">JPG, PNG, WebP. Max 5MB.</p>
                         </div>
 
-                        <!-- Gallery -->
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between mb-2">
-                                <label class="block font-label-md text-label-md text-on-surface-variant">Galeri Lapangan (Opsional)</label>
-                            </div>
-                            
-                            @for($i = 1; $i <= 4; $i++)
-                                <div>
-                                    <label class="block text-sm text-on-surface-variant mb-1">Foto Tambahan {{ $i }}</label>
-                                    <input type="file" name="gallery_images[]" accept="image/jpeg,image/png,image/webp" class="w-full text-sm text-on-surface-variant file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-surface-container-high file:text-on-surface hover:file:bg-surface-variant cursor-pointer">
-                                </div>
-                            @endfor
-                        </div>
+
                     </div>
                 </div>
             </div>
